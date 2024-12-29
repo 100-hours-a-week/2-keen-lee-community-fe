@@ -54,15 +54,18 @@ const cancelImage = () => {
 };
 
 function check(check1, check2, check3, check4) {
-    if (check1 & check2 & check3 & check4) {
-        const styleSheet = document.createElement('style');
+    const styleSheet = document.createElement('style');
         document.head.appendChild(styleSheet);
+    if (check1 & check2 & check3 & check4) {
         styleSheet.sheet.insertRule('button { background-color: #7F6AEE; }', 0);
+    }
+    else{
+        styleSheet.sheet.insertRule('button { background-color: #aca0eb; }', 0);
     }
 }
 
 document.getElementById('back').addEventListener('click', () => {
-    location.href = 'ex';
+    location.href = '/';
 });
 helper.innerText="";
 helper1.innerText="";
@@ -78,14 +81,40 @@ for (let i = 0; i < emailElements.length; i++) {
             helper1.innerText =
                 '이메일을 입력해 주세요!';
             check1 = false;
+            check(check1, check2, check3, check4)
         } else if (!emailreg.test(emailval)) {
             helper1.innerText =
                 '*올바른 이메일 주소를 입력해주세요. (예: example@example.com)';
             check1 = false;
+            check(check1, check2, check3, check4)
         } else if (emailreg.test(emailval)) {
-            helper1.innerText = '*';
-            check1 = true;
-            check(check1, check2, check3, check4);
+            console.log(emailval, "이메일 입력");
+            const userData = {
+                email: emailval,
+            };
+            fetch('http://localhost:3000/users/emailcheck', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            })
+            .then(response => response.json())  // JSON 형식으로 응답 받기
+            .then(jsondata => {
+                helper1.innerText = jsondata.message;
+                if(jsondata.user_id === 1){
+                    check1 = true;
+                    check(check1, check2, check3, check4);
+                }
+                else{
+                    check1 = false;
+                    check(check1, check2, check3, check4);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+            
         }
     });
 }
@@ -93,19 +122,33 @@ for (let i = 0; i < emailElements.length; i++) {
 for (let i = 0; i < elepassword.length; i++) {
     elepassword[i].addEventListener('focusout', () => {
         const elepass = elepassword[i].value;
-
+        const elepasscheck = elepasswordcheck[i].value;
         if (!elepass) {
             helper2.innerText =
                 '비밀번호를 입력해 주세요!';
             check2 = false;
+            check(check1, check2, check3, check4)
         } else if (!passwordreg.test(elepass)) {
             helper2.innerText =
                 '비밀번호는 8자이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.';
             check2 = false;
+            check(check1, check2, check3, check4)
         } else if (passwordreg.test(elepass)) {
             helper2.innerText = '*';
             check2 = true;
             check(check1, check2, check3, check4);
+            if(elepass !== elepasscheck){
+                helper3.innerText = '비밀번호가 다릅니다.';
+                check3 = false;
+                check(check1, check2, check3, check4);
+            }
+            else{
+                helper3.innerText = '*';
+                check3 = true;
+                check(check1, check2, check3, check4);
+            }
+            
+            
         }
     });
 }
@@ -118,13 +161,15 @@ for (let i = 0; i < elepasswordcheck.length; i++) {
             helper3.innerText =
                 '비밀번호를 한번더 입력해 주세요!';
             check3 = false;
+            check(check1, check2, check3, check4)
         } else if (elepass != elepasscheck) {
             helper3.innerText =
                 '비밀번호가 다릅니다.';
             check3 = false;
-        } else if (elepass == elepasscheck) {
+            check(check1, check2, check3, check4)
+        } else if (elepass === elepasscheck) {
             helper3.innerText =
-                '같습니다';
+                '*';
             check3 = true;
             check(check1, check2, check3, check4);
         }
@@ -138,18 +183,46 @@ for (let i = 0; i < elenickname.length; i++) {
             helper4.innerText =
                 '*닉네임을 입력해주세요';
             check4 = false;
+            check(check1, check2, check3, check4)
         } else if (nickreg.test(elename)) {
             helper4.innerText =
                 '*띄어쓰기를 제거해주세요';
             check4 = false;
+            check(check1, check2, check3, check4)
         } else if (nick11.test(elename)) {
             helper4.innerText =
                 '닉네임은 최대10자 까지 작성 가능합니다.';
             check4 = false;
-        } else {
-            helper4.innerText = '*';
-            check4 = true;
-            check(check1, check2, check3, check4);
+            check(check1, check2, check3, check4)
+        } 
+        else {
+                console.log(elename, "닉네임 입력");
+                const userData = {
+                    nickname: elename,
+                };
+                fetch('http://localhost:3000/users/nicknamecheck', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(userData),
+                })
+                .then(response => response.json())  // JSON 형식으로 응답 받기
+                .then(jsondata => {
+                    helper4.innerText = jsondata.message;
+                    if(jsondata.user_id === 1){
+                        check4 = true;
+                        helper4.innerText = '*';
+                        check(check1, check2, check3, check4);
+                    }
+                    else{
+                        check4 = false;
+                        check(check1, check2, check3, check4);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
     });
 }
@@ -159,60 +232,64 @@ document.getElementById('login').addEventListener('click', () => {
     const password = elepassword[0].value;
     const passwordch = elepasswordcheck[0].value;
     const nickname = elenickname[0].value;
-    
-    if(nickname&&password&&passwordch&&email){
-
-    }
     const userData = {
         img: imagebase64,
         email: email,
         password: password,
         nickname: nickname,
     };
-    fetch('http://localhost:3000/users/saveUser', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-    })
-    .then(response => response.json())  // JSON 형식으로 응답 받기
-    .then(jsondata => {
-        console.log(jsondata);
-        if(jsondata.status_num === 1){
-            helper1.innerText =
-                jsondata.invalid_requestError;
-            check1 = false;
-        }
-        else if(jsondata.status_num === 2){
-            helper4.innerText =
-                jsondata.invalid_requestError;
-            check1 = false;
-        }
-        else if(jsondata.status_num === 3){
-            helper1.innerText =
-                jsondata.invalid_requestError;
-            check1 = false;
-        }
-        else if(jsondata.status_num === 4){
-            helper4.innerText =
-                jsondata.invalid_requestError;
-            check1 = false;
-        }
-        else if(jsondata.status_num === 5){
-            helper3.innerText =
-                jsondata.invalid_requestError;
-            check1 = false;
-        }
-        else if (jsondata.user_id === 1) {
-            console.log("회원가입 성공");
-            location.href = `/ex`;
-        }
-    })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-        document.getElementsByClassName('sign').item(0).addEventListener('click', () => {
-            location.href = '/ex';
+    if(check1 && check2 && check3 && check4){
+        fetch('http://localhost:3000/users/saveUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true'
+            },
+            body: JSON.stringify(userData),
         })
+        .then(response => response.json())  // JSON 형식으로 응답 받기
+        .then(jsondata => {
+            console.log(jsondata);
+            if(jsondata.status_num === 1){
+                helper1.innerText =
+                    jsondata.invalid_requestError;
+                check1 = false;
+                check(check1, check2, check3, check4)
+            }
+            else if(jsondata.status_num === 2){
+                helper4.innerText =
+                    jsondata.invalid_requestError;
+                check1 = false;
+                check(check1, check2, check3, check4)
+            }
+            else if(jsondata.status_num === 3){
+                helper1.innerText =
+                    jsondata.invalid_requestError;
+                check1 = false;
+                check(check1, check2, check3, check4)
+            }
+            else if(jsondata.status_num === 4){
+                helper4.innerText =
+                    jsondata.invalid_requestError;
+                check1 = false;
+                check(check1, check2, check3, check4)
+            }
+            else if(jsondata.status_num === 5){
+                helper3.innerText =
+                    jsondata.invalid_requestError;
+                check1 = false;
+                check(check1, check2, check3, check4)
+            }
+            else if (jsondata.user_id === 1) {
+                console.log("회원가입 성공");
+                location.href = `/`;
+            }
+        })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+});
+document.getElementsByClassName('sign').item(0).addEventListener('click', () => {
+    location.href = '/';
 });

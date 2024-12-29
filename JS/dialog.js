@@ -1,7 +1,13 @@
 const urlParams = new URLSearchParams(window.location.search);
 const nick = urlParams.get('id');
 
-fetch("http://localhost:3000/dialog")
+fetch("http://localhost:3000/dialog", {
+    method: "GET",
+    headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
+    }
+})
 	.then((response) => {
         if(!response.ok){
             throw new Error("네트워크 응답이 올바르지 않습니다.")
@@ -66,7 +72,7 @@ fetch("http://localhost:3000/dialog")
         });
         
         document.getElementById('item3').addEventListener('click', () => {
-            location.href = `ex`;
+            location.href = `/`;
         });
 
         
@@ -164,7 +170,13 @@ fetch("http://localhost:3000/dialog")
             // 생성한 댓글을 commentContainer에 추가
             commentContainer.appendChild(commentDiv);
         });
-        fetch(`http://localhost:3000/users/${nick}`)
+        fetch(`http://localhost:3000/users/${nick}`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
+            }
+        })
 	.then((response) => {
         if(!response.ok){
             throw new Error("네트워크 응답이 올바르지 않습니다.")
@@ -218,7 +230,13 @@ fetch("http://localhost:3000/dialog")
             
             //날짜 JSON에서 불러오기
             date.item(i).textContent = json[i].createdate;
-            fetch(`http://localhost:3000/users/getimg/${json[i].id}`)
+            fetch(`http://localhost:3000/users/getimg/${json[i].id}`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
+                }
+            })
             .then((response) => {
                 if(!response.ok){
                     console.log(i);

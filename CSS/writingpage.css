@@ -1,11 +1,13 @@
-body {
-    width: 1920px;
-    height: 1457px;
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle&family=Hi+Melody&family=Noto+Sans+KR:wght@100..900&display=swap');
+html, body {
+    margin: 0 0 0 0;
+    width: 100%;
+    height: 100%;
     background: #f4f5f7;
 }
 .head {
     display: flex;
-    width: 1920px;
+    width: 100%;
     height: 104px;
     align-items: center;
     position: relative;
@@ -13,6 +15,8 @@ body {
     border-bottom: 1px solid #000000;
 }
 .title {
+    font-family: "Noto Sans KR", serif;
+    position: relative;
     font-size: 32px;
     width: 206px;
     height: 32px;
@@ -20,28 +24,60 @@ body {
     text-align: center;
 }
 .back {
-    position: absolute;
+    position: relative;
     width: 10.93px;
     height: 18.89px;
-    top: 42.53px;
-    right: 1211.16px;
+    align-items: center;
+    left: calc(33%);
     gap: 0px;
     opacity: 0px;
 }
 .img1 {
     width: 36px;
     height: 36px;
-    top: 36px;
-    left: 1196px;
+    margin: 0 0 0 auto;
     gap: 0px;
     opacity: 0px;
-    position: absolute;
+    position: relative;
     border-radius: 100%;
 }
+.felx1 {
+    align-content: center;
+    width: 115px;
+    height: 149px;
+    top : calc(40%);
+    left: calc(60%);
+    position: absolute; /* 독립적으로 위치 지정 */
+    display: flex;
+    flex-direction: column;
+}
+.felx2 {
+    position: relative;
+    display: none;
+    flex-direction: column;
+    top: 8px;
+    align-items: center;
+}
+.felx2 > div {
+    font-family: "Noto Sans KR", serif;
+    width: 67px;
+    height: 15px;
+    gap: 0px;
+    opacity: 0px;
+    font-size: 12px;
+    line-height: 14.52px;
+    text-align: center;
+    width: Hug (115px) px;
+    height: Hug (35px) px;
+    padding: 10px 24px 10px 24px;
+    gap: 8px;
+    opacity: 0px;
+    background: #d9d9d9;
+}
 .bodytitle {
-    width: auto;
+    font-family: "Noto Sans KR", serif;
     height: 31px;
-    margin: 24px auto auto 688px;
+    margin: 24px auto auto 33%;
     font-size: 24px;
     font-weight: 700;
     line-height: 31.2px;
@@ -54,10 +90,11 @@ body {
 .img2 {
     width: 36px;
     height: 36px;
-    margin: 12px 10px 24px 688px;
+    margin: 12px 10px 24px 33%;
     border-radius: 100%;
 }
 .userid {
+    font-family: "Noto Sans KR", serif;
     height: 20px;
     font-size: 15px;
     font-weight: 700;
@@ -65,6 +102,7 @@ body {
     margin-top: 20px;
 }
 .date {
+    font-family: "Noto Sans KR", serif;
     height: 18px;
     gap: 0px;
     opacity: 0px;
@@ -75,6 +113,7 @@ body {
     margin-left: 24px;
 }
 .fix {
+    font-family: "Noto Sans KR", serif;
     width: 50px;
     height: 27px;
     padding: 2px 12px 2px 12px;
@@ -87,6 +126,7 @@ body {
     display: inline;
 }
 .del {
+    font-family: "Noto Sans KR", serif;
     width: 50px;
     height: 27px;
     padding: 2px 12px 2px 12px;
@@ -100,6 +140,7 @@ body {
     display: inline;
 }
 .buttonflex{
+    font-family: "Noto Sans KR", serif;
     display: flex;
     flex-direction: row;
     margin-left: 142px;
@@ -110,7 +151,7 @@ body {
 .hr1 {
     width: 592px;
     height: 0px;
-    margin-left: 664px;
+    margin-left: 32%;
     gap: 0px;
     border: 1px 1px 1px 1px;
     opacity: 0px;
@@ -122,9 +163,10 @@ body {
     gap: 0px;
     opacity: 0px;
     background: #d9d9d9;
-    margin: 24px 688px;
+    margin: 24px 33%;
 }
 .content {
+    font-family: "Noto Sans KR", serif;
     width: 544px;
     /* height: 231px; TODO: 댓글 길이변경에 따라 고쳐야될수도 있음*/
     gap: 0px;
@@ -133,15 +175,16 @@ body {
     font-weight: 400;
     line-height: 21.15px;
     text-align: left;
-    margin: 24px 688px;
+    margin: 24px 33%;
 }
 .cntflex {
     display: flex;
     margin-top: 32px;
-    margin-left: 783px;
+    margin-left: 38%;
     text-align: center;
 }
 .cntgood {
+    font-family: "Noto Sans KR", serif;
     width: 116px;
     height: 77px;
     border-radius: 16px 16px 16px 16px;
@@ -149,6 +192,7 @@ body {
     background: #d9d9d9;
 }
 .cntshow {
+    font-family: "Noto Sans KR", serif;
     width: 116px;
     height: 77px;
     border-radius: 16px 16px 16px 16px;
@@ -157,6 +201,7 @@ body {
     margin-left: 8px;
 }
 .cntcomnt {
+    font-family: "Noto Sans KR", serif;
     width: 116px;
     height: 77px;
     border-radius: 16px 16px 16px 16px;
@@ -165,6 +210,7 @@ body {
     margin-left: 8px;
 }
 .number {
+    font-family: "Noto Sans KR", serif;
     margin: 12px 41px 1px 40px;
     width: 35px;
     height: 26px;
@@ -176,9 +222,9 @@ body {
     text-align: center;
 }
 .text {
-    width: 56px;
+    font-family: "Noto Sans KR", serif;
     height: 25px;
-    margin: 0px 30px 13px 30px;
+    margin: 0px auto;
     font-size: 16px;
     font-weight: 700;
     line-height: 25.04px;
@@ -188,13 +234,14 @@ body {
     width: 592px;
     height: 0px;
     margin-top: 32px;
-    margin-left: 664px;
+    margin-left: 32%;
     gap: 0px;
     border: 1px 0px 0px 0px;
     opacity: 0px;
     border: 1px solid #00000029;
 }
 .flex{
+    font-family: "Noto Sans KR", serif;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -203,7 +250,7 @@ body {
     width: 592px;
     height: 169px;
     margin-top: 32px;
-    margin-left: 664px;
+    margin-left: 32%;
     margin-bottom: 8px;
     gap: 0px;
     border-radius: 16px 16px 16px 16px;
@@ -240,15 +287,15 @@ body {
     display: flex;
     flex-direction: row;
     width: 544px;
-    height: 65px;
-    margin: 16px 688px 0px 688px;
+    margin: 16px auto 0px 33%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 16px 16px 16px 16px;
 }
 .flexcomment3 {
     display: flex;
     flex-direction: column;
     width: 424px;
 }
-
 .img4 {
     width: 36px;
     height: 36px;
@@ -281,16 +328,16 @@ body {
     opacity: 0px;
 }
 .textmin {
-    width: 236px;
-    height: 21px;
+    width: auto;
+    max-width: 498px;
+    height: auto;
     margin-top: 8px;
     margin-left: 46px;
-    gap: 0px;
-    opacity: 0px;
     font-size: 15px;
-    font-weight: 400;
+    font-weight: 236px;
     line-height: 21.15px;
     text-align: left;
+    overflow-wrap: break-word;
 }
 .flexcomment4 {
     display: flex;
@@ -304,8 +351,8 @@ body {
     display: none;
     top: 0;
     left: 0;
-    width: 1920px;
-    height: 1457px;
+    width: 100%;
+    height: 100%;
     position: absolute;
     background-color: rgba(255, 255, 255, 0.5);
 }
@@ -313,12 +360,13 @@ body {
     display: none;
     top: 0;
     left: 0;
-    width: 1920px;
-    height: 1457px;
+    width: 100%;
+    height: 100%;
     position: absolute;
     background-color: rgba(255, 255, 255, 0.5);
 }
 .modal_body {
+    font-family: "Noto Sans KR", serif;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -326,10 +374,9 @@ body {
     height: 242px;
     gap: 0px;
     border-radius: 12px 12px 12px 12px;
-    opacity: 0px;
     background: #ffffff;
     position: relative;
-    top: 40%;
+    top:40%;
     left: 40%;
 }
 .modal > h2 {
@@ -372,24 +419,22 @@ body {
     text-decoration-skip-ink: none;
 }
 .modalbutton1 {
+    font-family: "Noto Sans KR", serif;
     background: #242424;
     color: white;
     margin-right: 16px;
-    font-family: Pretendard;
     font-size: 20px;
     font-weight: 400;
     line-height: 23.87px;
     text-align: center;
-    text-underline-position: from-font;
     text-decoration-skip-ink: none;
 }
 .modalbutton2 {
+    font-family: "Noto Sans KR", serif;
     background: #c4a5fa;
-    font-family: Pretendard;
     font-size: 20px;
     font-weight: 400;
     line-height: 23.87px;
     text-align: center;
-    text-underline-position: from-font;
     text-decoration-skip-ink: none;
 }

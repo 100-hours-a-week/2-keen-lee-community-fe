@@ -21,7 +21,13 @@ function colorcg(item) {
 }
 document.getElementById('helper').textContent = "";
 document.getElementById('helper2').textContent = "";
-fetch(`http://localhost:3000/users/${dialogId}`)
+fetch(`http://localhost:3000/users/${dialogId}`, {
+    method: "GET",
+    headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
+    }
+})
 	.then((response) => {
         if(!response.ok){
             throw new Error("네트워크 응답이 올바르지 않습니다.")
@@ -35,10 +41,10 @@ fetch(`http://localhost:3000/users/${dialogId}`)
     .catch((error) => console.log(error))
 
 document.getElementById('img1').addEventListener('click', () => {
-    if (document.getElementById('felx2').style.display === 'none') {
-        document.getElementById('felx2').style.display = 'flex';
+    if (document.getElementById('flex2').style.display === 'none') {
+        document.getElementById('flex2').style.display = 'flex';
     } else {
-        document.getElementById('felx2').style.display = 'none';
+        document.getElementById('flex2').style.display = 'none';
     }
 });
 colorcg('item1');
@@ -54,7 +60,7 @@ document.getElementById('item2').addEventListener('click', () => {
 });
 
 document.getElementById('item3').addEventListener('click', () => {
-    location.href = `ex`;
+    location.href = `/`;
 });
 
 
@@ -133,6 +139,7 @@ document.getElementById('button1').addEventListener('click', () => {
         fetch(`http://localhost:3000/users/updatePassword/${dialogId}`, {
             method : "POST",
             headers :{'Content-Type' : 'application/json',
+                'ngrok-skip-browser-warning': 'true'
             },
             body : JSON.stringify({password : document.getElementById('passwordinput').value}),
         })
@@ -152,4 +159,9 @@ document.getElementById('button1').addEventListener('click', () => {
         });
        
     }
+});
+document.getElementsByClassName('title').item(0).addEventListener('click', () => {
+    setTimeout(() => {
+        window.location.replace(`dialog?id=${dialogId}`);
+    }, 100);
 });

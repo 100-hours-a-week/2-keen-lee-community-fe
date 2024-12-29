@@ -20,7 +20,13 @@ const loadFile = (input) => {
     }
 };
 
-fetch(`http://localhost:3000/users/${dialogId}`)
+fetch(`http://localhost:3000/users/${dialogId}`, {
+    method: "GET",
+    headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
+    }
+})
 	.then((response) => {
         if(!response.ok){
             throw new Error("네트워크 응답이 올바르지 않습니다.")
@@ -33,7 +39,13 @@ fetch(`http://localhost:3000/users/${dialogId}`)
     })
     .catch((error) => console.log(error))
 
-fetch(`http://localhost:3000/users/infochange/${dialogId}`)
+fetch(`http://localhost:3000/users/infochange/${dialogId}`, {
+    method: "GET",
+    headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
+    }
+})
     .then((response) => {
         if (!response.ok) {
             throw new Error("네트워크 응답이 올바르지 않습니다.");
@@ -73,7 +85,7 @@ fetch(`http://localhost:3000/users/infochange/${dialogId}`)
         const img1 = document.getElementById('img1');
         if (img1) {
             img1.addEventListener('click', () => {
-                const flex2 = document.getElementById('felx2');
+                const flex2 = document.getElementById('flex2');
                 if (flex2) {
                     if (flex2.style.display !== 'none') {
                         flex2.style.display = 'none';
@@ -102,6 +114,7 @@ fetch(`http://localhost:3000/users/infochange/${dialogId}`)
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
+                    'ngrok-skip-browser-warning': 'true'
                 },
                 body: JSON.stringify({img: '',nickname: document.getElementById('inputbox').value, email: document.getElementsByClassName('emailtext').item(0).textContent , img: document.getElementsByClassName('img2').item(0).src}),
             })
@@ -153,6 +166,7 @@ fetch(`http://localhost:3000/users/infochange/${dialogId}`)
             fetch(`http://localhost:3000/users/deleteUser/infochange/${dialogId}`, {
                 method : "DELETE",
             headers :{'Content-Type' : 'application/json',
+                'ngrok-skip-browser-warning': 'true'
             },
             body : JSON.stringify({email : json.email}),
             })
@@ -160,7 +174,7 @@ fetch(`http://localhost:3000/users/infochange/${dialogId}`)
             .then(jsondata => {
                 if(jsondata.user_id === 1){
                     setTimeout(() => {
-                        window.location.replace('ex');
+                        window.location.replace('/');
                     }, 100);  // 100ms 후에 리다이렉션
                     alert('탈퇴되었습니다!');
                 }
@@ -181,7 +195,7 @@ fetch(`http://localhost:3000/users/infochange/${dialogId}`)
         });
 
         document.getElementById('item3').addEventListener('click', () => {
-            location.href = 'ex';
+            location.href = '/';
         });
         document.getElementById('inputbox').addEventListener('focusout', () =>{
             if (!document.getElementById('inputbox').value) {
@@ -202,3 +216,9 @@ fetch(`http://localhost:3000/users/infochange/${dialogId}`)
     .catch((error) => {
         console.log(error);
     });
+
+document.getElementsByClassName('title').item(0).addEventListener('click', () => {
+    setTimeout(() => {
+        window.location.replace(`dialog?id=${dialogId}`);
+    }, 100);
+});

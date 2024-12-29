@@ -44,7 +44,13 @@ fetch(`http://localhost:3000/users/${urlnick}`)
         document.getElementsByClassName("img1").item(0).src= json;
     })
     .catch((error) => console.log(error))
-fetch(`http://localhost:3000/dialog/getwritingchange/${dialogId}/${urlnick}/${no}`)
+fetch(`http://localhost:3000/dialog/getwritingchange/${dialogId}/${urlnick}/${no}`, {
+    method: "GET",
+    headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
+    }
+})
     .then(response => response.text())
     .then(data => {
         const jsondata = JSON.parse(data);
@@ -64,6 +70,44 @@ fetch(`http://localhost:3000/dialog/getwritingchange/${dialogId}/${urlnick}/${no
                 alert('최대26글자까지 입력가능합니다.');
             }
         });
+
+        function colorcg(item) {
+            document.getElementById(`${item}`).addEventListener('mouseover', () => {
+                const style = document.createElement('style');
+                document.head.appendChild(style);
+                style.sheet.insertRule(`#${item} { background-color: #E9E9E9 }`, 0);
+            });
+        
+            document.getElementById(`${item}`).addEventListener('mouseout', () => {
+                const style = document.createElement('style');
+                document.head.appendChild(style);
+                style.sheet.insertRule(`#${item} { background-color: #d9d9d9}`, 0);
+            });
+        }
+        
+        document.getElementById('img1').addEventListener('click', () => {
+            if (document.getElementById('felx2').style.display === 'none') {
+                document.getElementById('felx2').style.display = 'flex';
+            } else {
+                document.getElementById('felx2').style.display = 'none';
+            }
+        });
+        colorcg('item1');
+        colorcg('item2');
+        colorcg('item3');
+
+        document.getElementById('item1').addEventListener('click', () => { //리스트
+            location.href = `infochange?id=${urlnick}`;
+        });
+        
+        document.getElementById('item2').addEventListener('click', () => {
+            location.href = `passwordcange?id=${urlnick}`;
+        });
+        
+        document.getElementById('item3').addEventListener('click', () => {
+            location.href = `/`;
+        });
+
         document.getElementById('back').addEventListener('click', () => {
             //뒤로가기
             location.href = `writingpage?id=${dialogId}&nickname=${urlnick}&no=${no}`;
@@ -74,6 +118,7 @@ fetch(`http://localhost:3000/dialog/getwritingchange/${dialogId}/${urlnick}/${no
                 method : "PATCH",
                 headers : {
                     'Content-Type': 'application/json',
+                    'ngrok-skip-browser-warning': 'true'
                 },
                 body: JSON.stringify({ 
                     title: document.getElementById('title1').value,

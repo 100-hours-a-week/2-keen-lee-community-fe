@@ -2,7 +2,13 @@ const urlParams = new URLSearchParams(window.location.search);
 const dialogId = urlParams.get('id');
 const urlnick = urlParams.get('nickname');
 const no = urlParams.get('no');
-fetch(`http://localhost:3000/users/${urlnick}`)
+fetch(`http://localhost:3000/users/${urlnick}`, {
+    method: "GET",
+    headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
+    }
+})
 	.then((response) => {
         if(!response.ok){
             throw new Error("네트워크 응답이 올바르지 않습니다.")
@@ -14,7 +20,13 @@ fetch(`http://localhost:3000/users/${urlnick}`)
 
     })
     .catch((error) => console.log(error))
-fetch(`http://localhost:3000/dialog/writingpage/${dialogId}/${no}`)
+fetch(`http://localhost:3000/dialog/writingpage/${dialogId}/${no}`, {
+    method: "GET",
+    headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
+    }
+})
 	.then((response) => {
         if(!response.ok){
             throw new Error("네트워크 응답이 올바르지 않습니다.")
@@ -133,7 +145,13 @@ json.cmt.forEach(comment => {
         ch(date.item(0), json.createdate); //게시글 작성일자
         img3.item(0).src = json.contentimg; //게시글 이미지
         //게시글 작성자 프로필 사진
-        fetch(`http://localhost:3000/users/getimg/${json.id}`)
+        fetch(`http://localhost:3000/users/getimg/${json.id}`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
+            }
+        })
         .then((response) => {
             if(!response.ok){
                 throw new Error("네트워크 응답이 올바르지 않습니다.")
@@ -161,6 +179,49 @@ json.cmt.forEach(comment => {
             document.getElementById('fix').style.display = 'none';
             document.getElementById('del').style.display = 'none';
         }
+
+
+
+
+
+        function colorcg(item) {
+            document.getElementById(`${item}`).addEventListener('mouseover', () => {
+                const style = document.createElement('style');
+                document.head.appendChild(style);
+                style.sheet.insertRule(`#${item} { background-color: #E9E9E9 }`, 0);
+            });
+        
+            document.getElementById(`${item}`).addEventListener('mouseout', () => {
+                const style = document.createElement('style');
+                document.head.appendChild(style);
+                style.sheet.insertRule(`#${item} { background-color: #d9d9d9}`, 0);
+            });
+        }
+        
+        document.getElementById('img1').addEventListener('click', () => {
+            if (document.getElementById('felx2').style.display === 'none') {
+                document.getElementById('felx2').style.display = 'flex';
+            } else {
+                document.getElementById('felx2').style.display = 'none';
+            }
+        });
+        colorcg('item1');
+        colorcg('item2');
+        colorcg('item3');
+
+        document.getElementById('item1').addEventListener('click', () => { //리스트
+            location.href = `infochange?id=${urlnick}`;
+        });
+        
+        document.getElementById('item2').addEventListener('click', () => {
+            location.href = `passwordcange?id=${urlnick}`;
+        });
+        
+        document.getElementById('item3').addEventListener('click', () => {
+            location.href = `/`;
+        });
+
+
     document.getElementById('back').addEventListener('click', () => {
         //뒤로가기
         location.href = `dialog?id=${urlnick}`;
@@ -178,7 +239,13 @@ json.cmt.forEach(comment => {
         for(let i = 0; i<json.cmt.length;i++){
             nickname.item(i).textContent=json.cmt[i].id;
             textmin.item(i).textContent=json.cmt[i].cmt;
-            fetch(`http://localhost:3000/users/getimg/${json.cmt[i].id}`)
+            fetch(`http://localhost:3000/users/getimg/${json.cmt[i].id}`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
+                }
+            })
             .then((response) => {
                 if(!response.ok){
                     throw new Error("네트워크 응답이 올바르지 않습니다.")
@@ -203,6 +270,9 @@ json.cmt.forEach(comment => {
             
         document.getElementsByClassName('del')[i+1].addEventListener('click', () => {
             //댓글 삭제버튼
+            const scrollY = window.scrollY;
+            const top = scrollY;
+            document.getElementById('delcomment').style.top = `${top}px`;
             document.getElementById('delcomment').style.display = 'inline-block';
             ///////////
             document.getElementById('modalbutton4').addEventListener('click', () => {
@@ -210,6 +280,7 @@ json.cmt.forEach(comment => {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
+                        'ngrok-skip-browser-warning': 'true'
                     },
                     // JSON.stringify()를 사용하여 데이터를 직렬화하고,
                     // 반환된 JSON 문자열을 body로 전송
@@ -238,7 +309,13 @@ json.cmt.forEach(comment => {
         });
         document.getElementsByClassName('fix')[i+1].addEventListener('click', () => {
             
-            fetch(`http://localhost:3000/dialog/getupdateComment/${dialogId}/${urlnick}/${i}`)
+            fetch(`http://localhost:3000/dialog/getupdateComment/${dialogId}/${urlnick}/${i}`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
+                }
+            })
             .then((response) => {
                 if(!response.ok){
                     throw new Error("네트워크 응답이 올바르지 않습니다.")
@@ -257,6 +334,7 @@ json.cmt.forEach(comment => {
                             method : 'PATCH',
                             headers : {
                                 'Content-Type': 'application/json',
+                                'ngrok-skip-browser-warning': 'true'
                             },
                             body: JSON.stringify({ 
                                 "cmt": input.value
@@ -287,9 +365,26 @@ json.cmt.forEach(comment => {
         });
         } //for문 여기까지//////////////////
         document.getElementsByClassName('cntgood').item(0).addEventListener('click', () => {
-            const index=json.good.findIndex(nickname => nickname.nickname === urlnick);
+            fetch(`http://localhost:3000/dialog/good/${dialogId}/${no}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('서버 요청 실패');
+                }
+                return response.json();
+            })
+            .then(json => {
+           
+
+            const index=json.findIndex(nickname => nickname.nickname === urlnick);
+            
             if(index !== -1){
-                fetch(`http://localhost:3000/dialog/ungood/${dialogId}/${urlnick}/${no}`)
+                fetch(`http://localhost:3000/dialog/ungood/${dialogId}/${urlnick}/${no}`, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
+                    }
+                })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('서버 요청 실패');
@@ -298,14 +393,21 @@ json.cmt.forEach(comment => {
                 })
                 .then(json => {
                     console.log('좋아요 클릭성공:', json);
-                    location.reload();
+                    document.getElementById('good').textContent =Number(document.getElementById('good').textContent) - 1; 
+                    // location.reload();
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
             }
             else if(index === -1){
-                fetch(`http://localhost:3000/dialog/good/${dialogId}/${urlnick}/${no}`)
+                fetch(`http://localhost:3000/dialog/good/${dialogId}/${urlnick}/${no}`, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
+                    }
+                })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('서버 요청 실패');
@@ -314,13 +416,22 @@ json.cmt.forEach(comment => {
                 })
                 .then(json => {
                     console.log('좋아요 클릭성공:', json);
-                    location.reload();
+                    document.getElementById('good').textContent =Number(document.getElementById('good').textContent) + Number(json.good);
+                    // location.reload();
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
             }
         })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    })
+
+
+
+
         document.getElementById('cmtbutton').addEventListener('click', () => {
             if(input.value != '' && document.getElementById('cmtbutton').textContent != '댓글 수정'){
                 let today = new Date();   
@@ -329,6 +440,7 @@ json.cmt.forEach(comment => {
                     method : 'POST',
                     headers : {
                         'Content-Type': 'application/json',
+                        'ngrok-skip-browser-warning': 'true'
                     },
                     body: JSON.stringify({ 
                         "no" : json.cmt.length+1,
@@ -369,6 +481,7 @@ json.cmt.forEach(comment => {
                 method : 'DELETE',
                 headers :{
                         'Content-Type': 'application/json',
+                        'ngrok-skip-browser-warning': 'true'
                 },
                 body: JSON.stringify({ 'message' : '삭제버튼 클릭'})
             })

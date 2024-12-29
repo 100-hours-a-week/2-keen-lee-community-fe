@@ -24,7 +24,13 @@ const loadFile = (input) => {
 };
 
 
-fetch(`http://localhost:3000/users/${dialogId}`)
+fetch(`http://localhost:3000/users/${dialogId}`, {
+    method: "GET",
+    headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
+    }
+})
 	.then((response) => {
         if(!response.ok){
             throw new Error("네트워크 응답이 올바르지 않습니다.")
@@ -49,6 +55,44 @@ function a() {
             '*제목,내용을 모두 작성해주세요';
     }
 }
+
+
+function colorcg(item) {
+    document.getElementById(`${item}`).addEventListener('mouseover', () => {
+        const style = document.createElement('style');
+        document.head.appendChild(style);
+        style.sheet.insertRule(`#${item} { background-color: #E9E9E9 }`, 0);
+    });
+
+    document.getElementById(`${item}`).addEventListener('mouseout', () => {
+        const style = document.createElement('style');
+        document.head.appendChild(style);
+        style.sheet.insertRule(`#${item} { background-color: #d9d9d9}`, 0);
+    });
+}
+
+document.getElementById('img1').addEventListener('click', () => {
+    if (document.getElementById('felx2').style.display === 'none') {
+        document.getElementById('felx2').style.display = 'flex';
+    } else {
+        document.getElementById('felx2').style.display = 'none';
+    }
+});
+colorcg('item1');
+colorcg('item2');
+colorcg('item3');
+
+document.getElementById('item1').addEventListener('click', () => { //리스트
+    location.href = `infochange?id=${dialogId}`;
+});
+
+document.getElementById('item2').addEventListener('click', () => {
+    location.href = `passwordcange?id=${dialogId}`;
+});
+
+document.getElementById('item3').addEventListener('click', () => {
+    location.href = `/`;
+});
 
 document.getElementById('back').addEventListener('click', () => {
     location.href = `dialog?id=${dialogId}`;
@@ -85,6 +129,7 @@ document.getElementById('enter').addEventListener('click', async(event) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify(userData),
     })
