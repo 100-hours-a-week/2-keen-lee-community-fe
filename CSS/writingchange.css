@@ -107,9 +107,9 @@ html, body {
 }
 .title1 {
     font-family: "Noto Sans KR", serif;
-    width: 228px;
+    width: 544px;
     height: 23px;
-    margin: 20px auto 21px 33%;
+    margin: 20px 34% 21px ;
     font-size: 16px;
     font-weight: 700;
     line-height: 22.56px;
@@ -140,14 +140,19 @@ html, body {
     border: 1px 1px 1px 1px;
     border: 1px solid #00000029;
 }
+.parent{
+    display: grid;
+    place-items: center; /* 수평 및 수직 중앙 정렬 */
+}
 .content {
     font-family: "Noto Sans KR", serif;
     width: 544px;
     height: 231px;
-    margin: 24 auto 0 33%;
+    margin: 24 34% 0;
     font-size: 15px;
     font-weight: 400;
     line-height: 21.15px;
+    resize: none;
     text-align: left;
 }
 .hr4 {

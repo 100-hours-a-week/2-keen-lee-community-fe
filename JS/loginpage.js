@@ -67,9 +67,7 @@ document.getElementById('login').addEventListener('click', () => {
         .then(response => response.text())
         .then(data => {
             const jsondata = JSON.parse(data);
-            console.log(jsondata)
             if(jsondata.user_id===1){
-                console.log("로그인성공");
                 location.href = `./dialog?id=${jsondata.nickname}`;
             }
             else{

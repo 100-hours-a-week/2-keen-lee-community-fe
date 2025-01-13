@@ -4,14 +4,13 @@ const urlnick = urlParams.get('nick');
 const no = urlParams.get('no');
 const nick11 = /.{26,}/;
 
-let contentimg = "";
 let contentimgname = "";
+const formData = new FormData();
 const loadFile = (input) => {
     const file = input.files[0];  // 선택된 파일
     const reader = new FileReader();
-    
+    formData.append('image', file);
     if(!file){
-        contentimg = "";
         contentimgname ="";
         document.getElementById('fileName').textContent = contentimgname;
         return;
@@ -19,7 +18,6 @@ const loadFile = (input) => {
 
 
     reader.onload = (e) => {
-        contentimg = e.target.result;
         contentimgname =file.name;
         document.getElementById('fileName').textContent = contentimgname;
     };
@@ -28,9 +26,9 @@ const loadFile = (input) => {
 };
 
 document.getElementById('input').addEventListener('click', () => {
-    contentimg = "";
     contentimgname ="";
     document.getElementById('fileName').textContent = contentimgname;
+    formData.delete("image");
 })
 
 fetch(`http://localhost:3000/users/${urlnick}`)
@@ -41,7 +39,7 @@ fetch(`http://localhost:3000/users/${urlnick}`)
         return response.json();
     })
 	.then((json) => {
-        document.getElementsByClassName("img1").item(0).src= json;
+        document.getElementsByClassName("img1").item(0).src= `http://localhost:3000/image/${json}`;
     })
     .catch((error) => console.log(error))
 fetch(`http://localhost:3000/dialog/getwritingchange/${dialogId}/${urlnick}/${no}`, {
@@ -51,17 +49,14 @@ fetch(`http://localhost:3000/dialog/getwritingchange/${dialogId}/${urlnick}/${no
         'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
     }
 })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(data => {
-        const jsondata = JSON.parse(data);
-        console.log(data);
-        contentimg = jsondata.contentimg;
-        contentimgname = jsondata.contentimgname;
+        let contentimg = data.contentimgname;
 
 
-        document.getElementById('title1').value = jsondata.title; //제목 JSON에서 가져와야함
-        document.getElementById('content').value =jsondata.content;
-        document.getElementById('fileName').textContent = jsondata.contentimgname;
+        document.getElementById('title1').value = data.title; //제목 JSON에서 가져와야함
+        document.getElementById('content').value =data.content;
+        document.getElementById('fileName').textContent = data.contentimgname;
         document.getElementById('title1').addEventListener('input', () => {
             if (nick11.test(document.getElementById('title1').value)) {
                 document.getElementById('title1').value = document
@@ -113,6 +108,18 @@ fetch(`http://localhost:3000/dialog/getwritingchange/${dialogId}/${urlnick}/${no
             location.href = `writingpage?id=${dialogId}&nickname=${urlnick}&no=${no}`;
         });
         document.getElementById('enter').addEventListener('click', () => {
+            fetch('http://localhost:3000/image', {
+                method: 'POST',
+                body: formData,
+                })
+                .then(response => response.json())  // JSON 형식으로 응답 받기
+                .then(jsondata => {
+                    if(jsondata.filename){
+                        contentimg=jsondata.filename;
+                    }
+                    else if(!jsondata.filename){
+                        contentimg="";
+                    }
             //개시글 수정버튼
             fetch(`http://localhost:3000/dialog/patchwritingchange/${dialogId}/${urlnick}/${no}`, {
                 method : "PATCH",
@@ -123,22 +130,20 @@ fetch(`http://localhost:3000/dialog/getwritingchange/${dialogId}/${urlnick}/${no
                 body: JSON.stringify({ 
                     title: document.getElementById('title1').value,
                     content: document.getElementById('content').value,
-                    contentimg: contentimg,
-                    contentimgname: contentimgname
+                    contentimgname: contentimg,
                 })
             })
             .then(response => {
                 if(!response.ok){
                     throw new Error("네트워크 응답이 올바르지 않습니다.")
                 }
-                console.log(response.json());
                 location.href = `writingpage?id=${dialogId}&nickname=${urlnick}&no=${no}`;
             })
             .then(data => {
-                console.log(data)
             })
             .catch((error) => console.log(error))
-            
+        })
+        .catch((error) => console.log(error))
         });
     })
     .catch(error => {

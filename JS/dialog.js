@@ -1,7 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const nick = urlParams.get('id');
-
-fetch("http://localhost:3000/dialog", {
+const URL_path = "http://localhost:3000";
+fetch(`${URL_path}/dialog`, {
     method: "GET",
     headers: {
         'Content-Type': 'application/json',
@@ -15,7 +15,6 @@ fetch("http://localhost:3000/dialog", {
         return response.json();
     })
 	.then((json) => {
-        const nick11 = /.{26,}/;
         document.getElementById('button').addEventListener('click', () => {
             location.href = `adddialog?id=${nick}`; //로그인한 회원 닉네임
         });
@@ -170,6 +169,8 @@ fetch("http://localhost:3000/dialog", {
             // 생성한 댓글을 commentContainer에 추가
             commentContainer.appendChild(commentDiv);
         });
+        
+
         fetch(`http://localhost:3000/users/${nick}`, {
             method: "GET",
             headers: {
@@ -177,17 +178,16 @@ fetch("http://localhost:3000/dialog", {
                 'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
             }
         })
-	.then((response) => {
-        if(!response.ok){
-            throw new Error("네트워크 응답이 올바르지 않습니다.")
-        }
-        return response.json();
-    })
-	.then((json) => {
-        document.getElementById("img1").src= json;
-
-    })
-    .catch((error) => console.log(error))
+        .then((response) => {
+            if(!response.ok){
+                throw new Error("네트워크 응답이 올바르지 않습니다.")
+            }
+            return response.json();
+        })
+        .then((json) => {
+            document.getElementById("img1").src = `${URL_path}/image/${json}`;
+        })
+        .catch((error) => console.log(error))
 
         //제목 json에서 불러오기
         for (let i = 0; i < json.length; i++) {
@@ -239,14 +239,13 @@ fetch("http://localhost:3000/dialog", {
             })
             .then((response) => {
                 if(!response.ok){
-                    console.log(i);
                     throw new Error("네트워크 응답이 올바르지 않습니다.")
                     
                 }
                 return response.json();
             })
             .then((json) => {
-                    image.item(i).src = json.img;
+                    image.item(i).src = `http://localhost:3000/image/${json.img}`;
             })
             .catch((error) => console.log(error))
             writingpage.item(i).addEventListener('click', () => {

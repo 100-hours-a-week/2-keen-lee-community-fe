@@ -103,8 +103,8 @@ html, body {
 .texttitle {
     font-family: "Noto Sans KR", serif;
     height: 23px;
+    width: 544px;
     margin-top: 20px;
-    margin-left: 33%;
     margin-bottom: 21px;
     font-size: 16px;
     font-weight: 700;
@@ -136,16 +136,19 @@ html, body {
     margin-left: auto;
     border: 1px solid #00000029;
 }
+.parent{
+    display: grid;
+    place-items: center; /* 수평 및 수직 중앙 정렬 */
+}
 .content {
     font-family: "Noto Sans KR", serif;
     width: 544px;
-    height: 21px;
-    margin-top: 24px;
-    margin-left: 33%;
-    margin-bottom: 234px;
+    height: 234px;
+    margin: 24 auto;
     font-size: 15px;
     font-weight: 400;
     line-height: 21.15px;
+    resize: none;
     text-align: left;
     border: none;
     color: #838486;

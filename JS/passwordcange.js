@@ -35,7 +35,7 @@ fetch(`http://localhost:3000/users/${dialogId}`, {
         return response.json();
     })
 	.then((json) => {
-        document.getElementsByClassName("img1").item(0).src= json;
+        document.getElementsByClassName("img1").item(0).src= `http://localhost:3000/image/${json}`;
 
     })
     .catch((error) => console.log(error))

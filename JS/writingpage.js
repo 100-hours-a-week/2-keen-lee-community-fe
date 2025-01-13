@@ -16,7 +16,7 @@ fetch(`http://localhost:3000/users/${urlnick}`, {
         return response.json();
     })
 	.then((json) => {
-        document.getElementsByClassName("img1").item(0).src= json;
+        document.getElementsByClassName("img1").item(0).src= `http://localhost:3000/image/${json}`;
 
     })
     .catch((error) => console.log(error))
@@ -143,7 +143,7 @@ json.cmt.forEach(comment => {
         ch(title.item(0) ,json.title.slice(0, 26));
         ch(userid.item(0), json.id); //게시글 작성자 아이디
         ch(date.item(0), json.createdate); //게시글 작성일자
-        img3.item(0).src = json.contentimg; //게시글 이미지
+        
         //게시글 작성자 프로필 사진
         fetch(`http://localhost:3000/users/getimg/${json.id}`, {
             method: "GET",
@@ -159,11 +159,15 @@ json.cmt.forEach(comment => {
             return response.json();
         })
         .then((json) => {
-            image.item(0).src = json.img;
+            image.item(0).src = `http://localhost:3000/image/${json.img}`;
         })
         .catch((error) => console.log(error))
-        if(json.contentimg===""){
+        if(!json.contentimgname){
             img3.item(0).remove();
+        }
+        else{
+            
+            img3.item(0).src = `http://localhost:3000/image/${json.contentimgname}`; //게시글 이미지
         }
         content.item(0).innerHTML = json.content.replace(/\n/g, "<br>");
        
@@ -234,6 +238,7 @@ json.cmt.forEach(comment => {
     document.getElementById('del').addEventListener('click', () => {
         //개시글 삭제버튼
         document.getElementById('delcontent').style.display = 'inline-block'; 
+        
     });
        
         for(let i = 0; i<json.cmt.length;i++){
@@ -253,7 +258,7 @@ json.cmt.forEach(comment => {
                 return response.json();
             })
             .then((imgae) => {
-                img4.item(i).src=imgae.img;
+                img4.item(i).src=`http://localhost:3000/image/${imgae.img}`;
             })
             .catch((error) => console.log(error))
             
@@ -270,9 +275,6 @@ json.cmt.forEach(comment => {
             
         document.getElementsByClassName('del')[i+1].addEventListener('click', () => {
             //댓글 삭제버튼
-            const scrollY = window.scrollY;
-            const top = scrollY;
-            document.getElementById('delcomment').style.top = `${top}px`;
             document.getElementById('delcomment').style.display = 'inline-block';
             ///////////
             document.getElementById('modalbutton4').addEventListener('click', () => {
@@ -293,7 +295,6 @@ json.cmt.forEach(comment => {
                     return response.text();
                 })
                 .then(data => {
-                    console.log('삭제 성공:', data);
                     const commentToDelete = document.getElementsByClassName('flexcomment2')[i];
                     if (commentToDelete) {
                         commentToDelete.remove();
@@ -323,7 +324,6 @@ json.cmt.forEach(comment => {
                 return response.json();
             })
             .then((json) => {
-                console.log(json)
                 input.value = json.cmt;
                 document.getElementById('cmtbutton').textContent = '댓글 수정';
                 document.getElementById('cmtbutton').addEventListener('click', () => {
@@ -341,14 +341,12 @@ json.cmt.forEach(comment => {
                               })
                     })// TODO :로그인 한 id로 받아야함
                     .then((response) => {
-                        console.log(i);
                         if(!response.ok){
                             throw new Error("네트워크 응답이 올바르지 않습니다.")
                         }
                         return response.json();
                     })
                     .then((json) => {
-                        console.log(json)
                     })
                     .catch((error) => console.log(error))
 
@@ -392,7 +390,6 @@ json.cmt.forEach(comment => {
                     return response.json();
                 })
                 .then(json => {
-                    console.log('좋아요 클릭성공:', json);
                     document.getElementById('good').textContent =Number(document.getElementById('good').textContent) - 1; 
                     // location.reload();
                 })
@@ -415,7 +412,6 @@ json.cmt.forEach(comment => {
                     return response.json();
                 })
                 .then(json => {
-                    console.log('좋아요 클릭성공:', json);
                     document.getElementById('good').textContent =Number(document.getElementById('good').textContent) + Number(json.good);
                     // location.reload();
                 })
@@ -456,7 +452,6 @@ json.cmt.forEach(comment => {
                     return response.text();
                 })
                 .then(data => {
-                    console.log('댓글 추가 성공:', data);
                     location.reload();
                 })
                 .catch(error => {
@@ -492,7 +487,6 @@ json.cmt.forEach(comment => {
                     return response.text();
                 })
                 .then(data => {
-                    console.log('삭제 성공:', data);
                     location.href = `dialog?id=${urlnick}`;
                 })
                 .catch(error => {
