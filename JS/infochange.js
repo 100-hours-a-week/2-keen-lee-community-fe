@@ -1,5 +1,22 @@
-const urlParams = new URLSearchParams(window.location.search);
-const dialogId = urlParams.get('id');
+function checkLoginStatus() {
+    fetch('http://localhost:3000/status', { credentials: 'include' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.loggedIn) {
+                console.log("환영합니다!");
+            } else {
+                alert("로그인해주세요");
+                location.href='/';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
+
+// 페이지 로드 시 로그인 상태 확인
+document.addEventListener('DOMContentLoaded', checkLoginStatus);
+
 const imagePreview = document.getElementsByClassName('img2').item(0);
 const plus = document.querySelector('.plus');
 const cancel = document.querySelector('.cancel');
@@ -17,12 +34,13 @@ const loadFile = (input) => {
         reader.readAsDataURL(file);
     }
 };
-fetch(`http://localhost:3000/users/${dialogId}`, {
+fetch(`http://localhost:3000/users`, {
     method: "GET",
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
-    }
+    },
+    credentials:'include'
 })
 	.then((response) => {
         if(!response.ok){
@@ -35,12 +53,13 @@ fetch(`http://localhost:3000/users/${dialogId}`, {
     })
     .catch((error) => console.log(error))
 
-fetch(`http://localhost:3000/users/infochange/${dialogId}`, {
+fetch(`http://localhost:3000/users/infochange`, {
     method: "GET",
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
-    }
+    },
+    credentials:'include'
 })
     .then((response) => {
         if (!response.ok) {
@@ -81,6 +100,7 @@ fetch(`http://localhost:3000/users/infochange/${dialogId}`, {
         const img1 = document.getElementById('img1');
         if (img1) {
             img1.addEventListener('click', () => {
+                checkLoginStatus();
                 const flex2 = document.getElementById('flex2');
                 if (flex2) {
                     if (flex2.style.display !== 'none') {
@@ -99,6 +119,7 @@ fetch(`http://localhost:3000/users/infochange/${dialogId}`, {
 
 
         document.getElementsByClassName('img2').item(0).addEventListener('click', () => { // 이미지 클릭시 기본 이미지로 변경 업로드 안하면 기본이미지로 변함
+            checkLoginStatus();
             document.getElementsByClassName('img2').item(0).src = 'http://localhost:3000/image/default_profile.png';
             formData.delete("image");
             json.imgname = "default_profile.png";
@@ -107,10 +128,11 @@ fetch(`http://localhost:3000/users/infochange/${dialogId}`, {
 
         // 닉네임 유효성 검사
         document.getElementById('button').addEventListener('click', () => {
-            
+            checkLoginStatus();
             fetch('http://localhost:3000/image', {
                 method: 'POST',
                 body: formData,
+                credentials:'include'
                 })
                 .then(response => response.json())  // JSON 형식으로 응답 받기
                 .then(jsondata => {
@@ -118,12 +140,13 @@ fetch(`http://localhost:3000/users/infochange/${dialogId}`, {
                         jsondata.filePath = json.imgpath;
                         jsondata.filename = json.imgname;
                     }
-            fetch(`http://localhost:3000/users/infochange/button/${dialogId}`, {
+            fetch(`http://localhost:3000/users/infochange/button`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                     'ngrok-skip-browser-warning': 'true'
                 },
+                credentials:'include',
                 body: JSON.stringify({imgpath: jsondata.filePath, imgname: jsondata.filename, nickname: document.getElementById('inputbox').value, email: document.getElementsByClassName('emailtext').item(0).textContent}),
             })
             .then(response => response.json())  // JSON 형식으로 응답 받기
@@ -164,20 +187,20 @@ fetch(`http://localhost:3000/users/infochange/${dialogId}`, {
 
         // 회원 탈퇴 모달
         document.getElementById('userout').addEventListener('click', () => {
+            checkLoginStatus();
             document.getElementById('delcomment').style.display = 'inline-block';
         });
 
         document.getElementById('modalbutton3').addEventListener('click', () => {
+            checkLoginStatus();
             document.getElementById('delcomment').style.display = 'none';
         });
 
         document.getElementById('modalbutton4').addEventListener('click', () => {
-            fetch(`http://localhost:3000/users/deleteUser/infochange/${dialogId}`, {
+            checkLoginStatus();
+            fetch(`http://localhost:3000/users/deleteUser/infochange`, {
                 method : "DELETE",
-            headers :{'Content-Type' : 'application/json',
-                'ngrok-skip-browser-warning': 'true'
-            },
-            body : JSON.stringify({email : json.email}),
+                credentials:'include'
             })
             .then(response => response.json())  // JSON 형식으로 응답 받기
             .then(jsondata => {
@@ -196,15 +219,24 @@ fetch(`http://localhost:3000/users/infochange/${dialogId}`, {
 
         // 메뉴 클릭 시 페이지 이동
         document.getElementById('item1').addEventListener('click', () => {
-            location.href = `infochange?id=${dialogId}`;
+            checkLoginStatus();
+            location.href = `infochange`;
         });
 
         document.getElementById('item2').addEventListener('click', () => {
-            location.href = `passwordcange?id=${dialogId}`;
+            checkLoginStatus();
+            location.href = `passwordcange`;
         });
 
         document.getElementById('item3').addEventListener('click', () => {
-            location.href = '/';
+            checkLoginStatus();
+            fetch('http://localhost:3000/logout', { credentials: 'include' })
+                .then(response => response.json())
+                .then(data => {
+                    location.href='/';
+                    alert(data.message);
+                })
+                .catch(error => console.error('Error:', error));
         });
         document.getElementById('inputbox').addEventListener('focusout', () =>{
             if (!document.getElementById('inputbox').value) {
@@ -227,7 +259,8 @@ fetch(`http://localhost:3000/users/infochange/${dialogId}`, {
     });
 
 document.getElementsByClassName('title').item(0).addEventListener('click', () => {
+    checkLoginStatus();
     setTimeout(() => {
-        window.location.replace(`dialog?id=${dialogId}`);
+        window.location.replace('dialog');
     }, 100);
 });

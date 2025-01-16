@@ -1,3 +1,17 @@
+function checkLoginStatus() {
+    fetch('http://localhost:3000/status', { credentials: 'include' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.loggedIn) {
+                console.log("환영합니다!");
+            } else {
+                alert("로그인해주세요");
+                location.href='/';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
 const passwordreg =
     /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
 const emailreg =
@@ -62,13 +76,15 @@ document.getElementById('login').addEventListener('click', () => {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': 'true'
         },
+        credentials: 'include',
         body: JSON.stringify(userData),
     })
-        .then(response => response.text())
+        .then(response => response.json())
         .then(data => {
-            const jsondata = JSON.parse(data);
-            if(jsondata.user_id===1){
-                location.href = `./dialog?id=${jsondata.nickname}`;
+            checkLoginStatus();
+            
+            if(data.user_id===1){
+                location.href = `./dialog?id=${data.nickname}`;
             }
             else{
                 document.getElementsByClassName('helper').item(0).textContent = "*아이디 또는 비밀번호를 확인해주세요";

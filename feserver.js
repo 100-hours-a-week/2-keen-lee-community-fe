@@ -5,6 +5,7 @@ const timeout = require('connect-timeout');
 const app = express();
 const port = 3001;
 require("dotenv").config();
+
 // app.use(cors({ origin: 'http://127.0.0.1:5500' }));
 app.use(cors());
 app.use(express.json());

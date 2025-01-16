@@ -1,5 +1,31 @@
-const urlParams = new URLSearchParams(window.location.search);
-const nick = urlParams.get('id');
+function checkLoginStatus() {
+    fetch('http://localhost:3000/status', { credentials: 'include' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.loggedIn) {
+                console.log("환영합니다!");
+            } else {
+                alert("로그인해주세요");
+                location.href = `/`;
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+// 로그아웃 요청
+document.getElementById('item3').addEventListener('click', () => {
+    checkLoginStatus();
+    fetch('http://localhost:3000/logout', { credentials: 'include' })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+        })
+        .catch(error => console.error('Error:', error));
+});
+
+// 페이지 로드 시 로그인 상태 확인
+document.addEventListener('DOMContentLoaded', checkLoginStatus);
+
 const URL_path = "http://localhost:3000";
 fetch(`${URL_path}/dialog`, {
     method: "GET",
@@ -16,7 +42,8 @@ fetch(`${URL_path}/dialog`, {
     })
 	.then((json) => {
         document.getElementById('button').addEventListener('click', () => {
-            location.href = `adddialog?id=${nick}`; //로그인한 회원 닉네임
+            checkLoginStatus();
+            location.href = `adddialog`;
         });
         document.getElementById('button').addEventListener('mouseover', () => {
             const style = document.createElement('style');
@@ -52,6 +79,7 @@ fetch(`${URL_path}/dialog`, {
         }
         
         document.getElementById('img1').addEventListener('click', () => {
+            checkLoginStatus();
             if (document.getElementById('felx2').style.display === 'none') {
                 document.getElementById('felx2').style.display = 'flex';
             } else {
@@ -63,15 +91,18 @@ fetch(`${URL_path}/dialog`, {
         colorcg('item3');
 
         document.getElementById('item1').addEventListener('click', () => { //리스트
-            location.href = `infochange?id=${nick}`;
+            checkLoginStatus();
+            location.href = `infochange`;
         });
         
         document.getElementById('item2').addEventListener('click', () => {
-            location.href = `passwordcange?id=${nick}`;
+            checkLoginStatus();
+            location.href = `passwordcange`;
         });
         
         document.getElementById('item3').addEventListener('click', () => {
             location.href = `/`;
+            checkLoginStatus();
         });
 
         
@@ -171,12 +202,13 @@ fetch(`${URL_path}/dialog`, {
         });
         
 
-        fetch(`http://localhost:3000/users/${nick}`, {
+        fetch(`http://localhost:3000/users`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
                 'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
-            }
+            },
+            credentials:'include'
         })
         .then((response) => {
             if(!response.ok){
@@ -249,8 +281,9 @@ fetch(`${URL_path}/dialog`, {
             })
             .catch((error) => console.log(error))
             writingpage.item(i).addEventListener('click', () => {
+                checkLoginStatus();
                 const dialogId = json[i].id;
-                location.href = `writingpage?id=${dialogId}&nickname=${nick}&no=${i+1}`;
+                location.href = `writingpage?dialogId=${dialogId}&no=${i+1}`;
             });
         }
     })

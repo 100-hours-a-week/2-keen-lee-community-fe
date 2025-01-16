@@ -140,7 +140,7 @@ for (let i = 0; i < elepassword.length; i++) {
             check2 = false;
             check(check1, check2, check3, check4)
         } else if (passwordreg.test(elepass)) {
-            helper2.innerText = '*';
+            helper2.innerText = '';
             check2 = true;
             check(check1, check2, check3, check4);
             if(elepass !== elepasscheck){
@@ -149,7 +149,7 @@ for (let i = 0; i < elepassword.length; i++) {
                 check(check1, check2, check3, check4);
             }
             else{
-                helper3.innerText = '*';
+                helper3.innerText = '';
                 check3 = true;
                 check(check1, check2, check3, check4);
             }
@@ -175,7 +175,7 @@ for (let i = 0; i < elepasswordcheck.length; i++) {
             check(check1, check2, check3, check4)
         } else if (elepass == elepasscheck) {
             helper3.innerText =
-                '*';
+                '';
             check3 = true;
             check(check1, check2, check3, check4);
         }
@@ -217,7 +217,7 @@ for (let i = 0; i < elenickname.length; i++) {
                     helper4.innerText = jsondata.message;
                     if(jsondata.user_id === 1){
                         check4 = true;
-                        helper4.innerText = '*';
+                        helper4.innerText = '';
                         check(check1, check2, check3, check4);
                     }
                     else{

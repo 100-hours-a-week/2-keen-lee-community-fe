@@ -1,10 +1,26 @@
+function checkLoginStatus() {
+    fetch('http://localhost:3000/status', { credentials: 'include' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.loggedIn) {
+                console.log("환영합니다!");
+            } else {
+                alert("로그인해주세요");
+                location.href='/';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
+
+// 페이지 로드 시 로그인 상태 확인
+document.addEventListener('DOMContentLoaded', checkLoginStatus);
 const passwordreg =
     /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/;
 let set = false;
 let set2 = false;
 
-const urlParams = new URLSearchParams(window.location.search);
-const dialogId = urlParams.get('id');
 
 function colorcg(item) {
     document.getElementById(`${item}`).addEventListener('mouseover', () => {
@@ -21,12 +37,13 @@ function colorcg(item) {
 }
 document.getElementById('helper').textContent = "";
 document.getElementById('helper2').textContent = "";
-fetch(`http://localhost:3000/users/${dialogId}`, {
+fetch(`http://localhost:3000/users`, {
     method: "GET",
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
-    }
+    },
+    credentials:'include'
 })
 	.then((response) => {
         if(!response.ok){
@@ -41,6 +58,7 @@ fetch(`http://localhost:3000/users/${dialogId}`, {
     .catch((error) => console.log(error))
 
 document.getElementById('img1').addEventListener('click', () => {
+    checkLoginStatus();
     if (document.getElementById('flex2').style.display === 'none') {
         document.getElementById('flex2').style.display = 'flex';
     } else {
@@ -52,15 +70,24 @@ colorcg('item2');
 colorcg('item3');
 
 document.getElementById('item1').addEventListener('click', () => {
-    location.href = `infochange?id=${dialogId}`;
+    checkLoginStatus();
+    location.href = `infochange`;
 });
 
 document.getElementById('item2').addEventListener('click', () => {
-    location.href = `passwordcange?id=${dialogId}`;
+    checkLoginStatus();
+    location.href = `passwordcange`;
 });
 
 document.getElementById('item3').addEventListener('click', () => {
-    location.href = `/`;
+    checkLoginStatus();
+    fetch('http://localhost:3000/logout', { credentials: 'include' })
+        .then(response => response.json())
+        .then(data => {
+            location.href='/';
+            alert(data.message);
+        })
+        .catch(error => console.error('Error:', error));
 });
 
 
@@ -135,12 +162,14 @@ document.getElementById('passwordinput2').addEventListener('focusout', () => {
 });
 
 document.getElementById('button1').addEventListener('click', () => {
+    checkLoginStatus();
     if (set && set2) {
-        fetch(`http://localhost:3000/users/updatePassword/${dialogId}`, {
+        fetch(`http://localhost:3000/users/updatePassword`, {
             method : "POST",
             headers :{'Content-Type' : 'application/json',
                 'ngrok-skip-browser-warning': 'true'
             },
+            credentials:'include',
             body : JSON.stringify({password : document.getElementById('passwordinput').value}),
         })
         .then(response => response.json())  // JSON 형식으로 응답 받기
@@ -161,7 +190,8 @@ document.getElementById('button1').addEventListener('click', () => {
     }
 });
 document.getElementsByClassName('title').item(0).addEventListener('click', () => {
+    checkLoginStatus();
     setTimeout(() => {
-        window.location.replace(`dialog?id=${dialogId}`);
+        window.location.replace(`dialog`);
     }, 100);
 });

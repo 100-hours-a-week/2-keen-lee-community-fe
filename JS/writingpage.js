@@ -1,13 +1,31 @@
+function checkLoginStatus() {
+    fetch('http://localhost:3000/status', { credentials: 'include' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.loggedIn) {
+            } else {
+                location.href='/';
+                alert("로그인해주세요");
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
+
+// 페이지 로드 시 로그인 상태 확인
+document.addEventListener('DOMContentLoaded', checkLoginStatus);
+
 const urlParams = new URLSearchParams(window.location.search);
-const dialogId = urlParams.get('id');
-const urlnick = urlParams.get('nickname');
+const dialogId = urlParams.get('dialogId');
 const no = urlParams.get('no');
-fetch(`http://localhost:3000/users/${urlnick}`, {
+fetch(`http://localhost:3000/users`, {
     method: "GET",
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
-    }
+    },
+    credentials:'include'
 })
 	.then((response) => {
         if(!response.ok){
@@ -25,7 +43,8 @@ fetch(`http://localhost:3000/dialog/writingpage/${dialogId}/${no}`, {
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
-    }
+    },
+    credentials:'include'
 })
 	.then((response) => {
         if(!response.ok){
@@ -34,7 +53,7 @@ fetch(`http://localhost:3000/dialog/writingpage/${dialogId}/${no}`, {
         return response.json();
     })
 	.then((json) => {
-
+        console.log(json)
         const good = document.getElementById('good');
         const show = document.getElementById('show');
         const cmtnum = document.getElementById('cmtnum');
@@ -55,7 +74,7 @@ fetch(`http://localhost:3000/dialog/writingpage/${dialogId}/${no}`, {
 const commentContainer = document.querySelector('.flex');
 
 // 댓글 데이터 배열을 순회하면서 동적으로 HTML 요소를 생성
-json.cmt.forEach(comment => {
+json.data.cmt.forEach(comment => {
     // 1. 새로운 댓글 컨테이너(div.flexcomment2) 생성
     const commentDiv = document.createElement('div');
     commentDiv.classList.add('flexcomment2');
@@ -140,12 +159,12 @@ json.cmt.forEach(comment => {
         }
 
 
-        ch(title.item(0) ,json.title.slice(0, 26));
-        ch(userid.item(0), json.id); //게시글 작성자 아이디
-        ch(date.item(0), json.createdate); //게시글 작성일자
+        ch(title.item(0) ,json.data.title.slice(0, 26));
+        ch(userid.item(0), json.data.id); //게시글 작성자 아이디
+        ch(date.item(0), json.data.createdate); //게시글 작성일자
         
         //게시글 작성자 프로필 사진
-        fetch(`http://localhost:3000/users/getimg/${json.id}`, {
+        fetch(`http://localhost:3000/users/getimg/${json.data.id}`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -162,20 +181,20 @@ json.cmt.forEach(comment => {
             image.item(0).src = `http://localhost:3000/image/${json.img}`;
         })
         .catch((error) => console.log(error))
-        if(!json.contentimgname){
+        if(!json.data.contentimgname){
             img3.item(0).remove();
         }
         else{
             
-            img3.item(0).src = `http://localhost:3000/image/${json.contentimgname}`; //게시글 이미지
+            img3.item(0).src = `http://localhost:3000/image/${json.data.contentimgname}`; //게시글 이미지
         }
-        content.item(0).innerHTML = json.content.replace(/\n/g, "<br>");
+        content.item(0).innerHTML = json.data.content.replace(/\n/g, "<br>");
        
 
 
 
         // 로그인한 유저가 작성자라면 fix, del 버튼 활성화
-        if(urlnick===document.getElementsByClassName('userid')[0].textContent){
+        if(json.username===document.getElementsByClassName('userid')[0].textContent){
             document.getElementById('fix').style.display = 'inline-block';
             document.getElementById('del').style.display = 'inline-block';
         }
@@ -203,6 +222,7 @@ json.cmt.forEach(comment => {
         }
         
         document.getElementById('img1').addEventListener('click', () => {
+            checkLoginStatus();
             if (document.getElementById('felx2').style.display === 'none') {
                 document.getElementById('felx2').style.display = 'flex';
             } else {
@@ -214,37 +234,49 @@ json.cmt.forEach(comment => {
         colorcg('item3');
 
         document.getElementById('item1').addEventListener('click', () => { //리스트
-            location.href = `infochange?id=${urlnick}`;
+            checkLoginStatus();
+            location.href = `infochange`;
         });
         
         document.getElementById('item2').addEventListener('click', () => {
-            location.href = `passwordcange?id=${urlnick}`;
+            checkLoginStatus();
+            location.href = `passwordcange`;
         });
         
         document.getElementById('item3').addEventListener('click', () => {
-            location.href = `/`;
+            checkLoginStatus();
+            fetch('http://localhost:3000/logout', { credentials: 'include' })
+                .then(response => response.json())
+                .then(data => {
+                    location.href='/';
+                    alert(data.message);
+                })
+                .catch(error => console.error('Error:', error));
         });
 
 
     document.getElementById('back').addEventListener('click', () => {
+        checkLoginStatus();
         //뒤로가기
-        location.href = `dialog?id=${urlnick}`;
+        location.href = `dialog`;
     });
     document.getElementById('fix').addEventListener('click', () => {
+        checkLoginStatus();
         //개시글 수정버튼
-        location.href = `writingchange?id=${dialogId}&nick=${urlnick}&no=${no}`; 
+        location.href = `writingchange?no=${no}`; 
     });
 
     document.getElementById('del').addEventListener('click', () => {
+        checkLoginStatus();
         //개시글 삭제버튼
         document.getElementById('delcontent').style.display = 'inline-block'; 
         
     });
        
-        for(let i = 0; i<json.cmt.length;i++){
-            nickname.item(i).textContent=json.cmt[i].id;
-            textmin.item(i).textContent=json.cmt[i].cmt;
-            fetch(`http://localhost:3000/users/getimg/${json.cmt[i].id}`, {
+        for(let i = 0; i<json.data.cmt.length;i++){
+            nickname.item(i).textContent=json.data.cmt[i].id;
+            textmin.item(i).textContent=json.data.cmt[i].cmt;
+            fetch(`http://localhost:3000/users/getimg/${json.data.cmt[i].id}`, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -262,22 +294,24 @@ json.cmt.forEach(comment => {
             })
             .catch((error) => console.log(error))
             
-            date2.item(i).textContent=json.cmt[i].date;
-            if(nickname.item(i).textContent===urlnick){
+            date2.item(i).textContent=json.data.cmt[i].date;
+            if(nickname.item(i).textContent===json.username){
                 document.getElementsByClassName('fix').item(i+1).style.display = 'inline-block';
                 document.getElementsByClassName('del').item(i+1).style.display = 'inline-block';
             }
-            if(nickname.item(i).textContent!==urlnick){
+            if(nickname.item(i).textContent!==json.username){
                 document.getElementsByClassName('fix').item(i+1).style.display = 'none';
                 document.getElementsByClassName('del').item(i+1).style.display = 'none';
             }
 
             
         document.getElementsByClassName('del')[i+1].addEventListener('click', () => {
+            checkLoginStatus();
             //댓글 삭제버튼
             document.getElementById('delcomment').style.display = 'inline-block';
             ///////////
             document.getElementById('modalbutton4').addEventListener('click', () => {
+                checkLoginStatus();
                 fetch(`http://localhost:3000/dialog/deletecomment/${dialogId}/${no}/${i+1}`, {
                     method: 'DELETE',
                     headers: {
@@ -309,13 +343,14 @@ json.cmt.forEach(comment => {
             });
         });
         document.getElementsByClassName('fix')[i+1].addEventListener('click', () => {
-            
-            fetch(`http://localhost:3000/dialog/getupdateComment/${dialogId}/${urlnick}/${i}`, {
+            checkLoginStatus();
+            fetch(`http://localhost:3000/dialog/getupdateComment/${dialogId}/${i}`, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
                     'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
-                }
+                },
+                credentials:'include'
             })
             .then((response) => {
                 if(!response.ok){
@@ -327,15 +362,17 @@ json.cmt.forEach(comment => {
                 input.value = json.cmt;
                 document.getElementById('cmtbutton').textContent = '댓글 수정';
                 document.getElementById('cmtbutton').addEventListener('click', () => {
+                    checkLoginStatus();
                     const style = document.createElement('style');
                     document.head.appendChild(style);
                     if (document.getElementById('cmtbutton').textContent == '댓글 수정') {
-                        fetch(`http://localhost:3000/dialog/patchupdateComment/${dialogId}/${urlnick}/${i}`, {
+                        fetch(`http://localhost:3000/dialog/patchupdateComment/${dialogId}/${i}`, {
                             method : 'PATCH',
                             headers : {
                                 'Content-Type': 'application/json',
                                 'ngrok-skip-browser-warning': 'true'
                             },
+                            credentials:'include',
                             body: JSON.stringify({ 
                                 "cmt": input.value
                               })
@@ -363,7 +400,8 @@ json.cmt.forEach(comment => {
         });
         } //for문 여기까지//////////////////
         document.getElementsByClassName('cntgood').item(0).addEventListener('click', () => {
-            fetch(`http://localhost:3000/dialog/good/${dialogId}/${no}`)
+            checkLoginStatus();
+            fetch(`http://localhost:3000/dialog/goodcnt/${dialogId}/${no}`, {credentials:'include'})
             .then(response => {
                 if (!response.ok) {
                     throw new Error('서버 요청 실패');
@@ -371,17 +409,16 @@ json.cmt.forEach(comment => {
                 return response.json();
             })
             .then(json => {
-           
-
-            const index=json.findIndex(nickname => nickname.nickname === urlnick);
-            
+            const index=json.goodcheck.findIndex(nickname => nickname.nickname === json.username);
+            console.log(index);
             if(index !== -1){
-                fetch(`http://localhost:3000/dialog/ungood/${dialogId}/${urlnick}/${no}`, {
+                fetch(`http://localhost:3000/dialog/ungood/${dialogId}/${no}`, {
                     method: "GET",
                     headers: {
                         'Content-Type': 'application/json',
                         'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
-                    }
+                    }, 
+                    credentials:'include'
                 })
                 .then(response => {
                     if (!response.ok) {
@@ -398,12 +435,13 @@ json.cmt.forEach(comment => {
                 });
             }
             else if(index === -1){
-                fetch(`http://localhost:3000/dialog/good/${dialogId}/${urlnick}/${no}`, {
+                fetch(`http://localhost:3000/dialog/good/${dialogId}/${no}`, {
                     method: "GET",
                     headers: {
                         'Content-Type': 'application/json',
                         'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
-                    }
+                    },
+                     credentials:'include'
                 })
                 .then(response => {
                     if (!response.ok) {
@@ -429,18 +467,20 @@ json.cmt.forEach(comment => {
 
 
         document.getElementById('cmtbutton').addEventListener('click', () => {
+            checkLoginStatus();
             if(input.value != '' && document.getElementById('cmtbutton').textContent != '댓글 수정'){
                 let today = new Date();   
                 const date = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate() + " " + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-                fetch(`http://localhost:3000/dialog/addcomment/${dialogId}/${urlnick}/${no}`, {
+                fetch(`http://localhost:3000/dialog/addcomment/${dialogId}/${no}`, {
                     method : 'POST',
                     headers : {
                         'Content-Type': 'application/json',
                         'ngrok-skip-browser-warning': 'true'
                     },
+                    credentials:'include',
                     body: JSON.stringify({ 
-                        "no" : json.cmt.length+1,
-                        "id": urlnick,
+                        "no" : json.data.cmt.length+1,
+                        "id": json.username,
                         "cmt": input.value,
                         "date": date
                       } )
@@ -461,23 +501,27 @@ json.cmt.forEach(comment => {
         });
 
         document.getElementById('modalbutton1').addEventListener('click', () => {
+            checkLoginStatus();
             //개시글삭제모달창 취소버튼
             document.getElementById('delcontent').style.display = 'none';
         });
         document.getElementById('modalbutton3').addEventListener('click', () => {
+            checkLoginStatus();
             //댓글모달창 취소버튼
             document.getElementById('delcomment').style.display = 'none';
         });
 
         
         document.getElementById('modalbutton2').addEventListener('click', () => { ////////////////TODO : 수정중...
+            checkLoginStatus();
             //개시글모달창 확인버튼
-            fetch(`http://localhost:3000/dialog/deletedialog/${dialogId}/${urlnick}/${no}`, {//개시글 삭제 delete fetch 구현
+            fetch(`http://localhost:3000/dialog/deletedialog/${dialogId}/${no}`, {//개시글 삭제 delete fetch 구현
                 method : 'DELETE',
                 headers :{
                         'Content-Type': 'application/json',
                         'ngrok-skip-browser-warning': 'true'
                 },
+                credentials:'include',
                 body: JSON.stringify({ 'message' : '삭제버튼 클릭'})
             })
                 .then(response => {
@@ -487,7 +531,7 @@ json.cmt.forEach(comment => {
                     return response.text();
                 })
                 .then(data => {
-                    location.href = `dialog?id=${urlnick}`;
+                    location.href = `dialog`;
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -497,9 +541,9 @@ json.cmt.forEach(comment => {
             document.getElementById('delcontent').style.display = 'none';
         });
 
-        a(good, json.good.length);
-        a(show, json.views); //개시글 좋아요,댓글,조회수
-        a(cmtnum, json.cmt.length);
+        a(good, json.data.good.length);
+        a(show, json.data.views); //개시글 좋아요,댓글,조회수
+        a(cmtnum, json.data.cmt.length);
 
         document.getElementById('inputbox').addEventListener('input', () => {
             //댓글 버튼 색상변경

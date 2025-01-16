@@ -1,3 +1,21 @@
+function checkLoginStatus() {
+    fetch('http://localhost:3000/status', { credentials: 'include' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.loggedIn) {
+                console.log("환영합니다!");
+            } else {
+                alert("로그인해주세요");
+                location.href='/';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
+
+// 페이지 로드 시 로그인 상태 확인
+document.addEventListener('DOMContentLoaded', checkLoginStatus);
 const nick11 = /.{26,}/;
 const textInput = document.getElementById('texttitle');
 const contentInput = document.getElementById('content');
@@ -25,12 +43,13 @@ const loadFile = (input) => {
 };
 
 
-fetch(`http://localhost:3000/users/${dialogId}`, {
+fetch(`http://localhost:3000/users`, {
     method: "GET",
     headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true' // ngrok 경고 우회
-    }
+    },
+    credentials:'include'
 })
 	.then((response) => {
         if(!response.ok){
@@ -73,6 +92,7 @@ function colorcg(item) {
 }
 
 document.getElementById('img1').addEventListener('click', () => {
+    checkLoginStatus();
     if (document.getElementById('felx2').style.display === 'none') {
         document.getElementById('felx2').style.display = 'flex';
     } else {
@@ -84,22 +104,33 @@ colorcg('item2');
 colorcg('item3');
 
 document.getElementById('item1').addEventListener('click', () => { //리스트
-    location.href = `infochange?id=${dialogId}`;
+    checkLoginStatus();
+    location.href = `infochange`;
 });
 
 document.getElementById('item2').addEventListener('click', () => {
-    location.href = `passwordcange?id=${dialogId}`;
+    checkLoginStatus();
+    location.href = `passwordcange`;
 });
 
 document.getElementById('item3').addEventListener('click', () => {
-    location.href = `/`;
+    checkLoginStatus();
+    fetch('http://localhost:3000/logout', { credentials: 'include' })
+        .then(response => response.json())
+        .then(data => {
+            location.href='/';
+            alert(data.message);
+        })
+        .catch(error => console.error('Error:', error));
 });
 
 document.getElementById('back').addEventListener('click', () => {
-    location.href = `dialog?id=${dialogId}`;
+    checkLoginStatus();
+    location.href = `dialog`;
 });
 
 textInput.addEventListener('input', () => {
+    checkLoginStatus();
     a();
     if (nick11.test(textInput.value)) {
         textInput.value = textInput.value.substring(0, 26);
@@ -112,38 +143,41 @@ contentInput.addEventListener('input', () => {
 });
 
 document.getElementById('input').addEventListener('click', () => {
+    checkLoginStatus();
     formData.delete("image");
 })
 
 document.getElementById('enter').addEventListener('click', async () => {
-    a(); // 입력값 유효성 검사
+    checkLoginStatus();
+    a(); 
     if (textInput.value !== "" && contentInput.value !== "") {
         try {
-            // 1. 이미지 업로드
+            
             const imageResponse = await fetch('http://localhost:3000/image', {
                 method: 'POST',
                 body: formData,
             });
 
             if (!imageResponse.ok) {
-                throw new Error('이미지 업로드 실패');
+                throw new Error('이미지가 없습니다.');
             }
 
             const imageData = await imageResponse.json();
 
-            // 2. 정보 저장
+            
             const userData = {
                 title: textInput.value,
                 content: contentInput.value,
                 contentimgname: imageData.filename,
             };
 
-            await fetch(`http://localhost:3000/dialog/saveDialog/${dialogId}`, {
+            await fetch(`http://localhost:3000/dialog/saveDialog`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'ngrok-skip-browser-warning': 'true',
                 },
+                credentials:'include',
                 body: JSON.stringify(userData),
             })
             .then((res) => {
@@ -156,7 +190,7 @@ document.getElementById('enter').addEventListener('click', async () => {
                 console.error('error발생:', error);
             })
             // 3. 리디렉션
-            location.href = `dialog?id=${dialogId}`;
+            location.href = `dialog`;
         } catch (error) {
             console.error('에러 발생:', error);
             alert('작업 중 오류가 발생했습니다. 다시 시도해주세요.');
