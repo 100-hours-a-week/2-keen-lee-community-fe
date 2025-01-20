@@ -1,4 +1,4 @@
-function checkLoginStatus() {
+const checkLoginStatus = () => {
     fetch('http://localhost:3000/status', { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
@@ -17,11 +17,11 @@ const passwordreg =
 const emailreg =
     /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
 
-function getemail() {
+const getemail = () => {
     const email = document.getElementById('email').value;
     return emailreg.test(email);
 }
-function getpss() {
+const getpss = () => {
     const password = document.getElementById('password').value;
     return passwordreg.test(password);
 }

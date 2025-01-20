@@ -2,6 +2,7 @@
     "name": "html",
     "version": "1.0.0",
     "main": "feserver.js",
+    "type": "module",
     "scripts": {
         "start": "node feserver.js",
         "lint": "eslint .",

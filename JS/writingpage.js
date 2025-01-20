@@ -1,4 +1,4 @@
-function checkLoginStatus() {
+const checkLoginStatus = ()=> {
     fetch('http://localhost:3000/status', { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
@@ -124,15 +124,7 @@ json.data.cmt.forEach(comment => {
     deleteButton.classList.add('del');
     deleteButton.textContent = '삭제';
 
-    // 삭제 버튼 클릭 시 동작 정의
-    // deleteButton.addEventListener('click', () => {
-    //     if (confirm('정말 삭제하시겠습니까?')) {
-    //         commentDiv.remove(); // 해당 댓글 삭제
-    //         alert('댓글이 삭제되었습니다.');
-    //     }
-    // });
 
-    // 수정 및 삭제 버튼을 buttonDiv에 추가
     buttonDiv.appendChild(editButton);
     buttonDiv.appendChild(deleteButton);
 

@@ -1,12 +1,18 @@
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
-const timeout = require('connect-timeout');
+import express from 'express';
+import path from 'path';
+import cors from 'cors';
+import timeout from 'connect-timeout';
+import dotenv from 'dotenv';
+
 const app = express();
 const port = 3001;
-require("dotenv").config();
+dotenv.config();
 
 // app.use(cors({ origin: 'http://127.0.0.1:5500' }));
+
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -60,7 +60,7 @@ const cancelImage = () => {
     imagebase64 = stdimg;
 };
 
-function check(check1, check2, check3, check4) {
+const check = (check1, check2, check3, check4) => {
     const styleSheet = document.createElement('style');
         document.head.appendChild(styleSheet);
     if (check1 & check2 & check3 & check4) {

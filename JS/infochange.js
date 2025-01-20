@@ -1,4 +1,4 @@
-function checkLoginStatus() {
+const checkLoginStatus = () => {
     fetch('http://localhost:3000/status', { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
@@ -80,7 +80,7 @@ fetch(`http://localhost:3000/users/infochange`, {
  
 
 
-        function colorcg(item) {
+        const colorcg = (item) => {
             const element = document.getElementById(item);
             if (element) {
                 element.addEventListener('mouseover', () => {

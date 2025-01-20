@@ -1,4 +1,4 @@
-function checkLoginStatus() {
+const checkLoginStatus = () => {
     fetch('http://localhost:3000/status', { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
@@ -85,7 +85,7 @@ fetch(`http://localhost:3000/dialog/getwritingchange/${no}`, {
             
         });
          
-        function colorcg(item) {
+        const colorcg = (item) => {
             document.getElementById(`${item}`).addEventListener('mouseover', () => {
                 const style = document.createElement('style');
                 document.head.appendChild(style);

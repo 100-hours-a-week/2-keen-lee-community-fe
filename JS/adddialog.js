@@ -1,4 +1,4 @@
-function checkLoginStatus() {
+const checkLoginStatus = () => {
     fetch('http://localhost:3000/status', { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
@@ -61,7 +61,7 @@ fetch(`http://localhost:3000/users`, {
         document.getElementsByClassName("img1").item(0).src= `http://localhost:3000/image/${json}`;
     })
     .catch((error) => console.log(error))
-function a() {
+const a = () => {
     if (contentInput.value!="" && textInput.value!="") {
         const style = document.createElement('style');
         document.head.appendChild(style);
@@ -77,7 +77,7 @@ function a() {
 }
 
 
-function colorcg(item) {
+const colorcg = (item) => {
     document.getElementById(`${item}`).addEventListener('mouseover', () => {
         const style = document.createElement('style');
         document.head.appendChild(style);
