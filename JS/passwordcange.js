@@ -178,7 +178,7 @@ document.getElementById('button1').addEventListener('click', () => {
                 document.getElementById('tost').classList.add('active');
                 setTimeout(() => {
                     document.getElementById('tost').classList.remove('active');
-                    location.reload();
+                    location.href = '/dialog';
                 }, 1000);
             }
             

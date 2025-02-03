@@ -157,7 +157,7 @@ fetch(`http://localhost:3000/users/infochange`, {
                         document.getElementById('button1').classList.add('active');
                         setTimeout(() => {
                             document.getElementById('button1').classList.remove('active');
-                            location.href = `dialog?id=${document.getElementById('inputbox').value}`;
+                            location.href = `dialog`;
                         }, 1000);
                     }
                 }

@@ -41,6 +41,7 @@ fetch(`${URL_path}/dialog`, {
         return response.json();
     })
 	.then((json) => {
+        console.log(json);
         document.getElementById('button').addEventListener('click', () => {
             checkLoginStatus();
             location.href = `adddialog`;
@@ -118,6 +119,7 @@ fetch(`${URL_path}/dialog`, {
 
 
         const commentContainer = document.querySelector('.bigflex'); //HTML 큰 틀
+        
         json.forEach(comment => {
             // 1. 새로운 댓글 컨테이너(div.flexcomment2) 생성
             const commentDiv = document.createElement('div');
@@ -151,8 +153,7 @@ fetch(`${URL_path}/dialog`, {
 
             const dateDiv = document.createElement('div');
             dateDiv.classList.add('date');
-            dateDiv.textContent = comment.date;
-            
+
             const hr = document.createElement('hr');
             hr.classList.add('line');
 
@@ -168,7 +169,6 @@ fetch(`${URL_path}/dialog`, {
         
             const nicknameDiv = document.createElement('p');
             nicknameDiv.classList.add('nickname');
-            nicknameDiv.textContent = comment.nickname;
         
             
         
@@ -230,7 +230,7 @@ fetch(`${URL_path}/dialog`, {
 
 
             //좋아요 수 json에서 불러오기
-            const good = json[i].good.length;
+            const good = json[i].good;
             if (Number(good) >= 1000) {
                 goodnum.item(i).textContent = `${"좋아요 " + parseInt(Number(good) / 1000)}K`;
             }else {
@@ -238,7 +238,7 @@ fetch(`${URL_path}/dialog`, {
             }
 
             //댓글 수 json에서 불러오기
-            const comment = json[i].cmt.length; //json[i].comment;
+            const comment = json[i].cmt; //json[i].comment;
             if (Number(comment) >= 1000) {
                 commentnum.item(i).textContent = `${"댓글 " + parseInt(Number(comment) / 1000)}K`;
             }
@@ -261,7 +261,7 @@ fetch(`${URL_path}/dialog`, {
             nickname.item(i).textContent = json[i].id;
             
             //날짜 JSON에서 불러오기
-            date.item(i).textContent = json[i].createdate;
+            date.item(i).textContent = json[i].date;
             fetch(`http://localhost:3000/users/getimg/${json[i].id}`, {
                 method: "GET",
                 headers: {
@@ -277,7 +277,7 @@ fetch(`${URL_path}/dialog`, {
                 return response.json();
             })
             .then((json) => {
-                    image.item(i).src = `http://localhost:3000/image/${json.img}`;
+                    image.item(i).src = `http://localhost:3000/image/${json}`;
             })
             .catch((error) => console.log(error))
             writingpage.item(i).addEventListener('click', () => {

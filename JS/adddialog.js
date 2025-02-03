@@ -152,19 +152,14 @@ document.getElementById('enter').addEventListener('click', async () => {
     a(); 
     if (textInput.value !== "" && contentInput.value !== "") {
         try {
-            
             const imageResponse = await fetch('http://localhost:3000/image', {
                 method: 'POST',
                 body: formData,
             });
-
             if (!imageResponse.ok) {
                 throw new Error('이미지가 없습니다.');
             }
-
             const imageData = await imageResponse.json();
-
-            
             const userData = {
                 title: textInput.value,
                 content: contentInput.value,

@@ -84,7 +84,7 @@ document.getElementById('login').addEventListener('click', () => {
             checkLoginStatus();
             
             if(data.user_id===1){
-                location.href = `./dialog?id=${data.nickname}`;
+                location.href = `./dialog`;
             }
             else{
                 document.getElementsByClassName('helper').item(0).textContent = "*아이디 또는 비밀번호를 확인해주세요";
