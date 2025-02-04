@@ -248,13 +248,16 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
             });
         }
         
-        document.getElementById('img1').addEventListener('click', () => {
+        document.getElementById('img1').addEventListener('mouseover', () => {
             checkLoginStatus();
-            if (document.getElementById('felx2').style.display === 'none') {
                 document.getElementById('felx2').style.display = 'flex';
-            } else {
-                document.getElementById('felx2').style.display = 'none';
-            }
+                document.getElementById('felx2').style.zIndex = 9999;
+        });
+
+        document.getElementsByClassName('felx1')[0].addEventListener('mouseleave', () => {
+            checkLoginStatus();
+            document.getElementById('felx2').style.display = 'none';
+            document.getElementById('felx2').style.zIndex = -1;
         });
         colorcg('item1');
         colorcg('item2');
@@ -409,7 +412,7 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
                         document.getElementById('cmtbutton').textContent = '댓글 등록';
                         input.value = '';
                     }
-                    style.sheet.insertRule('#cmtbutton { background-color: #ACA0EB}', 0);
+                    style.sheet.insertRule('#cmtbutton { background-color: #000000}', 0);
                     
         
                 });
@@ -569,9 +572,9 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
             const style = document.createElement('style');
             document.head.appendChild(style);
             if (document.getElementById('inputbox').value) {
-                style.sheet.insertRule('#cmtbutton { background-color: #7F6AEE }', 0);
+                style.sheet.insertRule('#cmtbutton { background-color: skyblue }', 0);
             }
-            style.sheet.insertRule('#cmtbutton { background-color: #ACA0EB}', 0);
+            style.sheet.insertRule('#cmtbutton { background-color: #000000}', 0);
         });
     
     })

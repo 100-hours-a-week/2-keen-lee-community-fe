@@ -99,13 +99,14 @@ fetch(`http://localhost:3000/dialog/getwritingchange/${no}`, {
             });
         }
         
-        document.getElementById('img1').addEventListener('click', () => {
+        document.getElementById('img1').addEventListener('mouseover', () => {
             checkLoginStatus();
-            if (document.getElementById('felx2').style.display === 'none') {
                 document.getElementById('felx2').style.display = 'flex';
-            } else {
-                document.getElementById('felx2').style.display = 'none';
-            }
+        });
+
+        document.getElementsByClassName('felx1')[0].addEventListener('mouseleave', () => {
+            checkLoginStatus();
+            document.getElementById('felx2').style.display = 'none';
         });
         colorcg('item1');
         colorcg('item2');

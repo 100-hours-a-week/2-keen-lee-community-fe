@@ -5,8 +5,6 @@ const checkLoginStatus = () => {
             if (data.loggedIn) {
                 console.log("환영합니다!");
             } else {
-                alert("로그인해주세요");
-                location.href='/';
             }
         })
         .catch(error => console.error('Error:', error));
@@ -30,12 +28,12 @@ document.getElementById('email').addEventListener('focusout', () => {
     if (getemail() & getpss()) {
         const styleSheet = document.createElement('style');
         document.head.appendChild(styleSheet);
-        styleSheet.sheet.insertRule('button { background-color: #7F6AEE; }', 0);
+        styleSheet.sheet.insertRule('button { background-color: skyblue; }', 0);
     }
     else{
         const styleSheet = document.createElement('style');
         document.head.appendChild(styleSheet);
-        styleSheet.sheet.insertRule('button { background-color: #ACA0EB; }', 0);
+        styleSheet.sheet.insertRule('button { background-color: #26252d; }', 0);
     }
 });
 
@@ -43,12 +41,12 @@ document.getElementById('password').addEventListener('focusout', () => {
     if (getemail() & getpss()) {
         const styleSheet = document.createElement('style');
         document.head.appendChild(styleSheet);
-        styleSheet.sheet.insertRule('button { background-color: #7F6AEE; }', 0);
+        styleSheet.sheet.insertRule('button { background-color: skyblue; }', 0);
     }
     else{
         const styleSheet = document.createElement('style');
         document.head.appendChild(styleSheet);
-        styleSheet.sheet.insertRule('button { background-color: #ACA0EB; }', 0);
+        styleSheet.sheet.insertRule('button { background-color: #26252d; }', 0);
     }
 });
 

@@ -57,14 +57,15 @@ fetch(`http://localhost:3000/users`, {
     })
     .catch((error) => console.log(error))
 
-document.getElementById('img1').addEventListener('click', () => {
-    checkLoginStatus();
-    if (document.getElementById('flex2').style.display === 'none') {
-        document.getElementById('flex2').style.display = 'flex';
-    } else {
+    document.getElementById('img1').addEventListener('mouseover', () => {
+        checkLoginStatus();
+            document.getElementById('flex2').style.display = 'flex';
+    });
+
+    document.getElementsByClassName('flex1')[0].addEventListener('mouseleave', () => {
+        checkLoginStatus();
         document.getElementById('flex2').style.display = 'none';
-    }
-});
+    });
 colorcg('item1');
 colorcg('item2');
 colorcg('item3');
@@ -103,7 +104,7 @@ document.getElementById('passwordinput').addEventListener('focusout', () => {
             set2 = false;
             const style = document.createElement('style');
             document.head.appendChild(style);
-            style.sheet.insertRule(`#button1 { background-color: #aca0eb}`, 0);
+            style.sheet.insertRule(`#button1 { background-color: #000000}`, 0);
         }
         if (
             document.getElementById('passwordinput').value ==
@@ -118,14 +119,25 @@ document.getElementById('passwordinput').addEventListener('focusout', () => {
         set = false;
         const style = document.createElement('style');
         document.head.appendChild(style);
-        style.sheet.insertRule(`#button1 { background-color: #aca0eb}`, 0);
+        style.sheet.insertRule(`#button1 { background-color: #000000}`, 0);
     }
     if (!document.getElementById('passwordinput').value) {
         document.getElementById('helper').innerText = '비밀번호를 입력해주세요';
         set = false;
         const style = document.createElement('style');
         document.head.appendChild(style);
-        style.sheet.insertRule(`#button1 { background-color: #aca0eb}`, 0);
+        style.sheet.insertRule(`#button1 { background-color: #000000}`, 0);
+    }
+    if (
+        passwordreg.test(document.getElementById('passwordinput2').value) &&
+        document.getElementById('passwordinput2').value ==
+            document.getElementById('passwordinput').value
+    ) {
+        document.getElementById('helper2').innerText = '';
+        const style = document.createElement('style');
+        document.head.appendChild(style);
+        style.sheet.insertRule(`#button1 { background-color: skyblue}`, 0);
+        set2 = true;
     }
 });
 
@@ -138,7 +150,7 @@ document.getElementById('passwordinput2').addEventListener('focusout', () => {
         document.getElementById('helper2').innerText = '';
         const style = document.createElement('style');
         document.head.appendChild(style);
-        style.sheet.insertRule(`#button1 { background-color: #7F6AEE}`, 0);
+        style.sheet.insertRule(`#button1 { background-color: skyblue}`, 0);
         set2 = true;
     }
     if (!document.getElementById('passwordinput2').value) {
@@ -147,7 +159,7 @@ document.getElementById('passwordinput2').addEventListener('focusout', () => {
         set2 = false;
         const style = document.createElement('style');
         document.head.appendChild(style);
-        style.sheet.insertRule(`#button1 { background-color: #aca0eb}`, 0);
+        style.sheet.insertRule(`#button1 { background-color: #000000}`, 0);
     }
     if (
         document.getElementById('passwordinput2').value !=
@@ -157,7 +169,7 @@ document.getElementById('passwordinput2').addEventListener('focusout', () => {
         set2 = false;
         const style = document.createElement('style');
         document.head.appendChild(style);
-        style.sheet.insertRule(`#button1 { background-color: #aca0eb}`, 0);
+        style.sheet.insertRule(`#button1 { background-color: #000000}`, 0);
     }
 });
 

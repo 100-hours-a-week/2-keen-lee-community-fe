@@ -49,13 +49,23 @@ fetch(`${URL_path}/dialog`, {
         document.getElementById('button').addEventListener('mouseover', () => {
             const style = document.createElement('style');
             document.head.appendChild(style);
-            style.sheet.insertRule('.button { background-color: #7F6AEE }', 0);
+            style.sheet.insertRule('.button { background-color: #ffffff }', 0);
+            style.sheet.insertRule('.button { color: #000000 }', 0);
+            style.sheet.insertRule('.button { width: 592px }', 0);
+            style.sheet.insertRule('.button { height: 169px }', 0);
+            style.sheet.insertRule('.button { border-radius: 16px 16px 16px 16px }', 0);
+            style.sheet.insertRule('.button { transition: all 0.3s ease-in-out }', 0);
         });
         
         document.querySelector('button').addEventListener('mouseout', () => {
             const style = document.createElement('style');
             document.head.appendChild(style);
-            style.sheet.insertRule('.button { background-color: #ACA0EB}', 0);
+            style.sheet.insertRule('.button { background-color: #000000}', 0);
+            style.sheet.insertRule('.button { color: #ffffff }', 0);
+            style.sheet.insertRule('.button { width: 39px }', 0);
+            style.sheet.insertRule('.button { height: 39px }', 0);
+            style.sheet.insertRule('.button { border-radius: 100% }', 0);
+            style.sheet.insertRule('.button { transition: all 0.3s ease-in-out }', 0);
         });
 
 
@@ -79,13 +89,14 @@ fetch(`${URL_path}/dialog`, {
             });
         }
         
-        document.getElementById('img1').addEventListener('click', () => {
+        document.getElementById('img1').addEventListener('mouseover', () => {
             checkLoginStatus();
-            if (document.getElementById('felx2').style.display === 'none') {
                 document.getElementById('felx2').style.display = 'flex';
-            } else {
-                document.getElementById('felx2').style.display = 'none';
-            }
+        });
+
+        document.getElementsByClassName('felx1')[0].addEventListener('mouseleave', () => {
+            checkLoginStatus();
+            document.getElementById('felx2').style.display = 'none';
         });
         colorcg('item1');
         colorcg('item2');

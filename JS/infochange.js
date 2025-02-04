@@ -97,20 +97,15 @@ fetch(`http://localhost:3000/users/infochange`, {
             }
         }
 
-        const img1 = document.getElementById('img1');
-        if (img1) {
-            img1.addEventListener('click', () => {
-                checkLoginStatus();
-                const flex2 = document.getElementById('flex2');
-                if (flex2) {
-                    if (flex2.style.display !== 'none') {
-                        flex2.style.display = 'none';
-                    } else {
-                        flex2.style.display = 'flex';
-                    }
-                }
-            });
-        }
+        document.getElementById('img1').addEventListener('mouseover', () => {
+            checkLoginStatus();
+                document.getElementById('flex2').style.display = 'flex';
+        });
+
+        document.getElementsByClassName('flex1')[0].addEventListener('mouseleave', () => {
+            checkLoginStatus();
+            document.getElementById('flex2').style.display = 'none';
+        });
 
         // 색상 변경
         colorcg('item1');

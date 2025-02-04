@@ -65,12 +65,12 @@ const a = () => {
     if (contentInput.value!="" && textInput.value!="") {
         const style = document.createElement('style');
         document.head.appendChild(style);
-        style.sheet.insertRule('.enter { background-color: #7F6AEE }', 0);
+        style.sheet.insertRule('.enter { background-color: skyblue }', 0);
         document.getElementsByClassName('helper')[0].innerText = '';
     } else {
         const style = document.createElement('style');
         document.head.appendChild(style);
-        style.sheet.insertRule('.enter { background-color: #ACA0EB}', 0);
+        style.sheet.insertRule('.enter { background-color: #000000}', 0);
         document.getElementsByClassName('helper')[0].innerText =
             '*제목,내용을 모두 작성해주세요';
     }
@@ -91,13 +91,14 @@ const colorcg = (item) => {
     });
 }
 
-document.getElementById('img1').addEventListener('click', () => {
+document.getElementById('img1').addEventListener('mouseover', () => {
     checkLoginStatus();
-    if (document.getElementById('felx2').style.display === 'none') {
         document.getElementById('felx2').style.display = 'flex';
-    } else {
-        document.getElementById('felx2').style.display = 'none';
-    }
+});
+
+document.getElementsByClassName('felx1')[0].addEventListener('mouseleave', () => {
+    checkLoginStatus();
+    document.getElementById('felx2').style.display = 'none';
 });
 colorcg('item1');
 colorcg('item2');

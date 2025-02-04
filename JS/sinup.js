@@ -64,10 +64,10 @@ const check = (check1, check2, check3, check4) => {
     const styleSheet = document.createElement('style');
         document.head.appendChild(styleSheet);
     if (check1 & check2 & check3 & check4) {
-        styleSheet.sheet.insertRule('button { background-color: #7F6AEE; }', 0);
+        styleSheet.sheet.insertRule('button { background-color: skyblue; }', 0);
     }
     else{
-        styleSheet.sheet.insertRule('button { background-color: #aca0eb; }', 0);
+        styleSheet.sheet.insertRule('button { background-color: #000000; }', 0);
     }
 }
 
