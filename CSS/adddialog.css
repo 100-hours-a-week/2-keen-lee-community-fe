@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle&family=Hi+Melody&family=Noto+Sans+KR:wght@100..900&display=swap');
+@font-face {
+    font-family: 'Ownglyph_ParkDaHyun';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 html, body {
     margin: 0 0 0 0;
     width: 100%;
@@ -15,12 +21,12 @@ html, body {
     background-color: #a2a2a2;
 }
 .title {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     position: relative;
     font-size: 32px;
     width: 206px;
     height: 32px;
-    margin: 0 auto auto;
+    margin: auto auto auto;
     text-align: center;
 }
 .back {
@@ -59,7 +65,7 @@ html, body {
     align-items: center;
 }
 .felx2 > div {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 67px;
     height: 15px;
     gap: 0px;
@@ -75,7 +81,7 @@ html, body {
     background: #d9d9d9;
 }
 .bodytitle {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 31px;
     margin: 24px auto 0;
     font-size: 24px;
@@ -84,7 +90,7 @@ html, body {
     text-align: center;
 }
 .minititle {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 21px;
     margin-top: 51px;
     margin-left: 33%;
@@ -101,16 +107,20 @@ html, body {
     border: 1px solid #00000029;
 }
 .texttitle {
-    font-family: "Noto Sans KR", serif;
-    height: 23px;
+    font-family: 'Ownglyph_ParkDaHyun';
+    height: 24px;
     width: 544px;
     margin-top: 20px;
     margin-bottom: 21px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     line-height: 22.56px;
+    resize: none;
     text-align: left;
     border: none;
+    background-color: #626262;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .hr2 {
     width: 592px;
@@ -120,7 +130,7 @@ html, body {
     border: 1px solid #00000029;
 }
 .minititle2 {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 21px;
     margin-top: 26px;
     margin-left: 33%;
@@ -141,7 +151,7 @@ html, body {
     place-items: center; /* 수평 및 수직 중앙 정렬 */
 }
 .content {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 544px;
     height: 234px;
     margin: 24 auto;
@@ -151,7 +161,11 @@ html, body {
     resize: none;
     text-align: left;
     border: none;
-    color: #838486;
+    color: white;
+    background-color: #626262;
+}
+::placeholder{
+    color: #D3C9B5;
 }
 .hr4 {
     width: 592px;
@@ -161,7 +175,7 @@ html, body {
     border: 1px solid #00000029;
 }
 .helper {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 15px;
     margin-top: 0px;
     margin-left: 33%;
@@ -177,7 +191,7 @@ html, body {
     flex-direction: column;
 }
 .good {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 18px;
     font-size: 15px;
     font-weight: 700;
@@ -208,7 +222,7 @@ html, body {
     margin-bottom: 27px;
 }
 .enter {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 355px;
     height: 33px;
     margin-left: 50%;

@@ -74,7 +74,7 @@ fetch(`http://localhost:3000/dialog/getwritingchange/${no}`, {
 
         document.getElementById('title1').value = data.title; //제목 JSON에서 가져와야함
         document.getElementById('content').value =data.content;
-        document.getElementById('fileName').textContent = data.contentimgname;
+        document.getElementById('fileName').textContent = '업로드 이미지: '+data.contentimgname;
         document.getElementById('title1').addEventListener('input', () => {
             if (nick11.test(document.getElementById('title1').value)) {
                 document.getElementById('title1').value = document

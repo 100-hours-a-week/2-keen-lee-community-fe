@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle&family=Hi+Melody&family=Noto+Sans+KR:wght@100..900&display=swap');
+@font-face {
+    font-family: 'Ownglyph_ParkDaHyun';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 html, body {
     margin: 0 0 0 0;
     background: #626262;
@@ -17,7 +23,7 @@ html, body {
     justify-content:center;
 }
 .title {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 206px;
     height: 32px;
     font-size: 32px;
@@ -29,7 +35,7 @@ html, body {
     width: 100%;
 }
 .bodytitle {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 83px;
     height: 38px;
     margin: 264px auto 0;
@@ -45,7 +51,7 @@ html, body {
 }
 .textemail {
     color: white;
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 18px;
     position: relative;
     margin: 49 18 0;
@@ -55,6 +61,7 @@ html, body {
     text-align: left;
 }
 .email {
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 355px;
     height: 33px;
     border-radius: 5px;
@@ -64,7 +71,7 @@ html, body {
 }
 .textpassword {
     color: white;
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 18px;
     position: relative;
     margin: 16 18 0;
@@ -74,6 +81,7 @@ html, body {
     text-align: left;
 }
 .password {
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 355px;
     height: 33px;
     border-radius: 5px;
@@ -81,7 +89,7 @@ html, body {
     margin: 8 18 0;
 }
 .helper {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     font-size: 12px;
     color: red;
     height: 15px;
@@ -106,7 +114,7 @@ html, body {
     justify-content: center;
 }
 button {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     color: white;
     width: 100px;
     height: 60px;
@@ -121,7 +129,7 @@ button {
     align-items: center;
     justify-content: center;
     color: rgb(0, 0, 0);
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 100px;
     height: 60px;
     border: none;

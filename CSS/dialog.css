@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle&family=Hi+Melody&family=Noto+Sans+KR:wght@100..900&display=swap');
+@font-face {
+    font-family: 'Ownglyph_ParkDaHyun';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 html, body {
     margin: 0;
     background: #626262;
@@ -16,7 +22,7 @@ html, body {
     justify-content:center;
 }
 .title {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 206px;
     height: 32px;
     font-size: 32px;
@@ -53,7 +59,7 @@ html, body {
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 .felx2 > div {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 67px;
     height: 15px;
     gap: 0px;
@@ -69,7 +75,7 @@ html, body {
     background: #d9d9d9;
 }
 .bodytitle {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 62px;
     margin : 40 auto 0;
     font-size: 24px;
@@ -92,7 +98,7 @@ html, body {
     margin: 0 auto;
 }
 .button {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     color: #ffffff;
     width: 39px;
     height: 39px;
@@ -120,8 +126,8 @@ html, body {
     margin: 18px auto;
 }
 .minititle {
-    font-family: "Noto Sans KR", serif;
-    font-size: 24px;
+    font-family: 'Ownglyph_ParkDaHyun';
+    font-size: 20px;
     font-weight: 700px;
     line-height: 31.2px;
     margin-top: 0px;
@@ -144,7 +150,7 @@ html, body {
     margin-bottom: 0px;
 }
 .good {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 18px;
     gap: 0px;
     opacity: 0px;
@@ -156,7 +162,7 @@ html, body {
     margin-bottom: 0px;
 }
 .comment {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 18px;
     gap: 0px;
     opacity: 0px;
@@ -169,7 +175,7 @@ html, body {
     margin-bottom: 0px;
 }
 .views {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 18px;
     gap: 0px;
     opacity: 0px;
@@ -182,7 +188,7 @@ html, body {
     margin-bottom: 0px;
 }
 .date {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 133px;
     height: 18px;
     gap: 0px;
@@ -217,7 +223,7 @@ html, body {
     border-radius: 100%;
 }
 .nickname {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 20px;
     gap: 0px;
     opacity: 0px;

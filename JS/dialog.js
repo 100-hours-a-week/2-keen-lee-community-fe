@@ -90,12 +90,10 @@ fetch(`${URL_path}/dialog`, {
         }
         
         document.getElementById('img1').addEventListener('mouseover', () => {
-            checkLoginStatus();
                 document.getElementById('felx2').style.display = 'flex';
         });
 
         document.getElementsByClassName('felx1')[0].addEventListener('mouseleave', () => {
-            checkLoginStatus();
             document.getElementById('felx2').style.display = 'none';
         });
         colorcg('item1');
@@ -233,15 +231,18 @@ fetch(`${URL_path}/dialog`, {
         .catch((error) => console.log(error))
 
         //제목 json에서 불러오기
-        for (let i = 0; i < json.length; i++) {
-            const titlelen1 = json[i].title;
+        
+        for (let i = 0, jindex = json.length; i < json.length ; i++) {
+            jindex -= 1;
+
+            const titlelen1 = json[jindex].title;
             if (titlelen1) {
                 titlelen.item(i).textContent = titlelen1.slice(0, 26);
             }
 
 
             //좋아요 수 json에서 불러오기
-            const good = json[i].good;
+            const good = json[jindex].good;
             if (Number(good) >= 1000) {
                 goodnum.item(i).textContent = `${"좋아요 " + parseInt(Number(good) / 1000)}K`;
             }else {
@@ -249,7 +250,7 @@ fetch(`${URL_path}/dialog`, {
             }
 
             //댓글 수 json에서 불러오기
-            const comment = json[i].cmt; //json[i].comment;
+            const comment = json[jindex].cmt; //json[i].comment;
             if (Number(comment) >= 1000) {
                 commentnum.item(i).textContent = `${"댓글 " + parseInt(Number(comment) / 1000)}K`;
             }
@@ -260,7 +261,7 @@ fetch(`${URL_path}/dialog`, {
 
 
             //조회 수 json에서 불러오기
-            const views = json[i].views;
+            const views = json[jindex].views;
             if (Number(views) >= 1000) {
                 viewsnum.item(i).textContent = `${"조회수 " + parseInt(Number(views) / 1000)}K`;
             }
@@ -269,11 +270,11 @@ fetch(`${URL_path}/dialog`, {
             }
 
             //닉네임 JSON에서 불러오기
-            nickname.item(i).textContent = json[i].id;
+            nickname.item(i).textContent = json[jindex].id;
             
             //날짜 JSON에서 불러오기
-            date.item(i).textContent = json[i].date;
-            fetch(`http://localhost:3000/users/getimg/${json[i].id}`, {
+            date.item(i).textContent = json[jindex].date;
+            fetch(`http://localhost:3000/users/getimg/${json[jindex].id}`, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -291,11 +292,20 @@ fetch(`${URL_path}/dialog`, {
                     image.item(i).src = `http://localhost:3000/image/${json}`;
             })
             .catch((error) => console.log(error))
+                writingpage.item(i).addEventListener('mouseover', () => {
+                    writingpage.item(i).style.transform = 'scale(1.1)';
+                });
+
+                writingpage.item(i).addEventListener('mouseout', () => {
+                    writingpage.item(i).style.transform = 'scale(1)'; 
+                });
+            
             writingpage.item(i).addEventListener('click', () => {
                 checkLoginStatus();
-                const dialogId = json[i].id;
-                location.href = `writingpage?dialogId=${dialogId}&no=${i+1}`;
+                const dialogId = json[jindex].id;
+                location.href = `writingpage?dialogId=${dialogId}&no=${jindex + 1}`;
             });
         }
     })
 	.catch((error) => console.log(error))
+    

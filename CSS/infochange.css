@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle&family=Hi+Melody&family=Noto+Sans+KR:wght@100..900&display=swap');
+@font-face {
+    font-family: 'Ownglyph_ParkDaHyun';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 html, body {
     margin: 0 0 0 0;
     background: #626262;
@@ -17,7 +23,7 @@ html, body {
     
 }
 .title {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 206px;
     height: 32px;
     font-size: 32px;
@@ -45,7 +51,7 @@ html, body {
     flex-direction: column;
 }
 .flex2 > div {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 67px;
     height: 15px;
     gap: 0px;
@@ -68,7 +74,7 @@ html, body {
     align-items: center;
 }
 .bodytitle {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 166px;
     height: 38px;
     margin: 161 auto 12;
@@ -78,7 +84,7 @@ html, body {
     text-align: center;
 }
 .bodytext {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 18px;
     margin:0 auto 0 38%;
     font-size: 15px;
@@ -106,7 +112,7 @@ html, body {
     position: relative;
 }
 .emailtitle {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 18px;
     top: 26px;
     left: 19px;
@@ -117,7 +123,7 @@ html, body {
     position: absolute;
 }
 .emailtext {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 17px;
     top: 60px;
     left: 19px;
@@ -128,7 +134,7 @@ html, body {
     position: absolute;
 }
 .nicknametitle {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 18px;
     top: 93px;
     left: 19px;
@@ -139,6 +145,7 @@ html, body {
     position: absolute;
 }
 .inputbox {
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 355px;
     height: 33px;
     top: 119px;
@@ -150,7 +157,7 @@ html, body {
     position: absolute;
 }
 .helper {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     height: 15px;
     top: 152px;
     left: 19px;
@@ -163,7 +170,7 @@ html, body {
     display: none;
 }
 .button {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 355px;
     height: 33px;
     margin: 11 auto;
@@ -177,7 +184,7 @@ html, body {
     text-align: center;
 }
 .flex4 {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     width: 327px;
     height: 41px;
     margin: 4 auto 0;
@@ -214,13 +221,14 @@ html, body {
     position: relative;
     display: none;
 }
+
 #button1.active {
     opacity: 100%;
     display: block;
 }
 
 .modal_body {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -233,7 +241,7 @@ html, body {
     left: 40%;
 }
 .modal > h2 {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     size: 24px;
     margin: 48px auto 0px;
     font-size: 24px;
@@ -243,7 +251,7 @@ html, body {
     text-decoration-skip-ink: none;
 }
 .modal > p {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     margin: 24px auto 0px;
     gap: 0px;
     opacity: 0px;
@@ -281,13 +289,13 @@ html, body {
     text-decoration-skip-ink: none;
 }
 .flexbutton {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 .flexbutton > button {
-    font-family: "Noto Sans KR", serif;
+    font-family: 'Ownglyph_ParkDaHyun';
     margin-top: 24px;
     width: 127px;
     height: 44px;
