@@ -1,5 +1,6 @@
+const localhost = 'localhost';
 const checkLoginStatus = () => {
-    fetch('http://localhost:3000/status', { credentials: 'include' })
+    fetch(`http://${localhost}:3000/status`, { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
             if (data.loggedIn) {
@@ -37,7 +38,7 @@ const colorcg = (item) => {
 }
 document.getElementById('helper').textContent = "";
 document.getElementById('helper2').textContent = "";
-fetch(`http://localhost:3000/users`, {
+fetch(`http://${localhost}:3000/users`, {
     method: "GET",
     headers: {
         'Content-Type': 'application/json',
@@ -52,7 +53,7 @@ fetch(`http://localhost:3000/users`, {
         return response.json();
     })
 	.then((json) => {
-        document.getElementsByClassName("img1").item(0).src= `http://localhost:3000/image/${json}`;
+        document.getElementsByClassName("img1").item(0).src= `http://${localhost}:3000/image/${json}`;
 
     })
     .catch((error) => console.log(error))
@@ -82,7 +83,7 @@ document.getElementById('item2').addEventListener('click', () => {
 
 document.getElementById('item3').addEventListener('click', () => {
     checkLoginStatus();
-    fetch('http://localhost:3000/logout', { credentials: 'include' })
+    fetch(`http://${localhost}:3000/logout`, { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
             location.href='/';
@@ -176,7 +177,7 @@ document.getElementById('passwordinput2').addEventListener('focusout', () => {
 document.getElementById('button1').addEventListener('click', () => {
     checkLoginStatus();
     if (set && set2) {
-        fetch(`http://localhost:3000/users/updatePassword`, {
+        fetch(`http://${localhost}:3000/users/updatePassword`, {
             method : "POST",
             headers :{'Content-Type' : 'application/json',
                 'ngrok-skip-browser-warning': 'true'

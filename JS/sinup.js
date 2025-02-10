@@ -1,3 +1,4 @@
+const localhost = 'localhost';
 const passwordreg =
     /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
 const emailreg =
@@ -98,7 +99,7 @@ for (let i = 0; i < emailElements.length; i++) {
             const userData = {
                 email: emailval,
             };
-            fetch('http://localhost:3000/users/emailcheck', {
+            fetch(`http://${localhost}:3000/users/emailcheck`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -205,7 +206,7 @@ for (let i = 0; i < elenickname.length; i++) {
                 const userData = {
                     nickname: elename,
                 };
-                fetch('http://localhost:3000/users/nicknamecheck', {
+                fetch(`http://${localhost}:3000/users/nicknamecheck`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -239,7 +240,7 @@ document.getElementById('login').addEventListener('click', () => {
     const nickname = elenickname[0].value;
     
     if(check1 && check2 && check3 && check4){
-        fetch('http://localhost:3000/image', {
+        fetch(`http://${localhost}:3000/image`, {
             method: 'POST',
             body: formData,
             })
@@ -256,7 +257,7 @@ document.getElementById('login').addEventListener('click', () => {
                     imgname: jsondata.filename,
                     imgpath: jsondata.filePath
                 };
-                fetch('http://localhost:3000/users/saveUser', {
+                fetch(`http://${localhost}:3000/users/saveUser`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

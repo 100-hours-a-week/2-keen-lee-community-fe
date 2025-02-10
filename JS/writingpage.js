@@ -1,5 +1,6 @@
+const localhost = 'localhost';
 const checkLoginStatus = ()=> {
-    fetch('http://localhost:3000/status', { credentials: 'include' })
+    fetch(`http://${localhost}:3000/status`, { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
             if (data.loggedIn) {
@@ -19,7 +20,7 @@ document.addEventListener('DOMContentLoaded', checkLoginStatus);
 const urlParams = new URLSearchParams(window.location.search);
 const dialogId = urlParams.get('dialogId');
 const no = urlParams.get('no');
-fetch(`http://localhost:3000/users`, {
+fetch(`http://${localhost}:3000/users`, {
     method: "GET",
     headers: {
         'Content-Type': 'application/json',
@@ -34,11 +35,11 @@ fetch(`http://localhost:3000/users`, {
         return response.json();
     })
 	.then((json) => {
-        document.getElementsByClassName("img1").item(0).src= `http://localhost:3000/image/${json}`;
+        document.getElementsByClassName("img1").item(0).src= `http://${localhost}:3000/image/${json}`;
 
     })
     .catch((error) => console.log(error))
-fetch(`http://localhost:3000/dialog/writingpage/${dialogId}/${no}`, {
+fetch(`http://${localhost}:3000/dialog/writingpage/${dialogId}/${no}`, {
     method: "GET",
     headers: {
         'Content-Type': 'application/json',
@@ -72,7 +73,7 @@ fetch(`http://localhost:3000/dialog/writingpage/${dialogId}/${no}`, {
 
         // 댓글 리스트를 담을 컨테이너
 const commentContainer = document.querySelector('.flex');
-fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
+fetch(`http://${localhost}:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
     method: "GET",
     headers: {
         'Content-Type': 'application/json',
@@ -105,7 +106,7 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
                 commentImage.classList.add('img4');
                 commentImage.src = ``;//comment.imageSrc; // 이미지 경로 설정
                 commentImage.alt = '';
-                fetch(`http://localhost:3000/users/getimg/${comment.id}`, {
+                fetch(`http://${localhost}:3000/users/getimg/${comment.id}`, {
                     method: "GET",
                     headers: {
                         'Content-Type': 'application/json',
@@ -119,7 +120,7 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
                     return response.json();
                 })
                 .then((json) => {
-                    commentImage.src  = `http://localhost:3000/image/${json}`;
+                    commentImage.src  = `http://${localhost}:3000/image/${json}`;
                 })
                 .catch((error) => console.log(error))
                 
@@ -191,7 +192,7 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
         ch(date.item(0), json.data.date); //게시글 작성일자
         
         //게시글 작성자 프로필 사진
-        fetch(`http://localhost:3000/users/getimg/${json.data.id}`, {
+        fetch(`http://${localhost}:3000/users/getimg/${json.data.id}`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -205,7 +206,7 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
             return response.json();
         })
         .then((json) => {
-            image.item(0).src = `http://localhost:3000/image/${json}`;
+            image.item(0).src = `http://${localhost}:3000/image/${json}`;
         })
         .catch((error) => console.log(error))
         if(!json.data.contentimgname){
@@ -213,7 +214,7 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
         }
         else{
             
-            img3.item(0).src = `http://localhost:3000/image/${json.data.contentimgname}`; //게시글 이미지
+            img3.item(0).src = `http://${localhost}:3000/image/${json.data.contentimgname}`; //게시글 이미지
         }
         content.item(0).innerHTML = json.data.content.replace(/\n/g, "<br>");
        
@@ -275,7 +276,7 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
         
         document.getElementById('item3').addEventListener('click', () => {
             checkLoginStatus();
-            fetch('http://localhost:3000/logout', { credentials: 'include' })
+            fetch(`http://${localhost}:3000/logout`, { credentials: 'include' })
                 .then(response => response.json())
                 .then(data => {
                     location.href='/';
@@ -302,7 +303,7 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
         document.getElementById('delcontent').style.display = 'inline-block'; 
         
     });
-    fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
+    fetch(`http://${localhost}:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
@@ -336,7 +337,7 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
             ///////////
             document.getElementById('modalbutton4').addEventListener('click', () => {
                 checkLoginStatus();
-                fetch(`http://localhost:3000/dialog/deletecomment/${dialogId}/${no}/${i}`, {
+                fetch(`http://${localhost}:3000/dialog/deletecomment/${dialogId}/${no}/${i}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -366,7 +367,7 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
         });
         document.getElementsByClassName('fix')[i+1].addEventListener('click', () => {
             checkLoginStatus();
-            fetch(`http://localhost:3000/dialog/getupdateComment/${no}/${i}`, {
+            fetch(`http://${localhost}:3000/dialog/getupdateComment/${no}/${i}`, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -388,7 +389,7 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
                     const style = document.createElement('style');
                     document.head.appendChild(style);
                     if (document.getElementById('cmtbutton').textContent == '댓글 수정') {
-                        fetch(`http://localhost:3000/dialog/patchupdateComment/${no}/${i}`, {
+                        fetch(`http://${localhost}:3000/dialog/patchupdateComment/${no}/${i}`, {
                             method : 'PATCH',
                             headers : {
                                 'Content-Type': 'application/json',
@@ -424,7 +425,7 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
      .catch((error) => console.log(error)) 
         document.getElementsByClassName('cntgood').item(0).addEventListener('click', () => {
             checkLoginStatus();
-            fetch(`http://localhost:3000/dialog/goodcnt/${dialogId}/${no}`, {credentials:'include'})
+            fetch(`http://${localhost}:3000/dialog/goodcnt/${dialogId}/${no}`, {credentials:'include'})
             .then(response => {
                 if (!response.ok) {
                     throw new Error('서버 요청 실패');
@@ -436,7 +437,7 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
             const index=json.goodcheck.findIndex(nickname => nickname.nickname === json.username);
             console.log(index)
             if(index !== -1){
-                fetch(`http://localhost:3000/dialog/ungood/${dialogId}/${no}`, {
+                fetch(`http://${localhost}:3000/dialog/ungood/${dialogId}/${no}`, {
                     method: "GET",
                     headers: {
                         'Content-Type': 'application/json',
@@ -459,7 +460,7 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
                 });
             }
             else if(index === -1){
-                fetch(`http://localhost:3000/dialog/good/${dialogId}/${no}`, {
+                fetch(`http://${localhost}:3000/dialog/good/${dialogId}/${no}`, {
                     method: "GET",
                     headers: {
                         'Content-Type': 'application/json',
@@ -495,7 +496,7 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
             if(input.value != '' && document.getElementById('cmtbutton').textContent != '댓글 수정'){
                 let today = new Date();   
                 const date = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate() + " " + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-                fetch(`http://localhost:3000/dialog/addcomment/${dialogId}/${no}`, {
+                fetch(`http://${localhost}:3000/dialog/addcomment/${dialogId}/${no}`, {
                     method : 'POST',
                     headers : {
                         'Content-Type': 'application/json',
@@ -537,7 +538,7 @@ fetch(`http://localhost:3000/dialog/writingpage/comment/${dialogId}/${no}`, {
         document.getElementById('modalbutton2').addEventListener('click', () => { ////////////////TODO : 수정중...
             checkLoginStatus();
             //개시글모달창 확인버튼
-            fetch(`http://localhost:3000/dialog/deletedialog/${dialogId}/${no}`, {//개시글 삭제 delete fetch 구현
+            fetch(`http://${localhost}:3000/dialog/deletedialog/${dialogId}/${no}`, {//개시글 삭제 delete fetch 구현
                 method : 'DELETE',
                 headers :{
                         'Content-Type': 'application/json',

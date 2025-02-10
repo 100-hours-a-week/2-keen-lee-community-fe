@@ -1,5 +1,6 @@
+const localhost = 'localhost';
 const checkLoginStatus = () => {
-    fetch('http://localhost:3000/status', { credentials: 'include' })
+    fetch(`http://${localhost}:3000/status`, { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
             if (data.loggedIn) {
@@ -68,7 +69,7 @@ document.getElementById('login').addEventListener('click', () => {
         email: email,
         password: password
     };
-    fetch('http://localhost:3000/users/login', {
+    fetch(`http://${localhost}:3000/users/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
+const localhost = 'localhost';
 const checkLoginStatus = () => {
-    fetch('http://localhost:3000/status', { credentials: 'include' })
+    fetch(`http://${localhost}:3000/status`, { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
             if (data.loggedIn) {
@@ -34,7 +35,7 @@ const loadFile = (input) => {
         reader.readAsDataURL(file);
     }
 };
-fetch(`http://localhost:3000/users`, {
+fetch(`http://${localhost}:3000/users`, {
     method: "GET",
     headers: {
         'Content-Type': 'application/json',
@@ -49,11 +50,11 @@ fetch(`http://localhost:3000/users`, {
         return response.json();
     })
 	.then((json) => {
-        document.getElementById("img1").src= `http://localhost:3000/image/${json}`;
+        document.getElementById("img1").src= `http://${localhost}:3000/image/${json}`;
     })
     .catch((error) => console.log(error))
 
-fetch(`http://localhost:3000/users/infochange`, {
+fetch(`http://${localhost}:3000/users/infochange`, {
     method: "GET",
     headers: {
         'Content-Type': 'application/json',
@@ -68,7 +69,7 @@ fetch(`http://localhost:3000/users/infochange`, {
         return response.json();
     })
     .then((json) => {
-        document.getElementsByClassName('img2').item(0).src = `http://localhost:3000/image/${json.imgname}`;
+        document.getElementsByClassName('img2').item(0).src = `http://${localhost}:3000/image/${json.imgname}`;
         document.getElementsByClassName('emailtext').item(0).textContent = json.email;
         document.getElementById('inputbox').value = json.nickname;
         //document.getElementsByClassName('img2').item(0).textContent = json.email; //TODO 나중에 이미지 추가시에 추가
@@ -115,7 +116,7 @@ fetch(`http://localhost:3000/users/infochange`, {
 
         document.getElementsByClassName('img2').item(0).addEventListener('click', () => { // 이미지 클릭시 기본 이미지로 변경 업로드 안하면 기본이미지로 변함
             checkLoginStatus();
-            document.getElementsByClassName('img2').item(0).src = 'http://localhost:3000/image/default_profile.png';
+            document.getElementsByClassName('img2').item(0).src = `http://${localhost}:3000/image/default_profile.png`;
             formData.delete("image");
             json.imgname = "default_profile.png";
             json.imgpath = "POTO/default_profile.png";
@@ -124,7 +125,7 @@ fetch(`http://localhost:3000/users/infochange`, {
         // 닉네임 유효성 검사
         document.getElementById('button').addEventListener('click', () => {
             checkLoginStatus();
-            fetch('http://localhost:3000/image', {
+            fetch(`http://${localhost}:3000/image`, {
                 method: 'POST',
                 body: formData,
                 credentials:'include'
@@ -135,7 +136,7 @@ fetch(`http://localhost:3000/users/infochange`, {
                         jsondata.filePath = json.imgpath;
                         jsondata.filename = json.imgname;
                     }
-            fetch(`http://localhost:3000/users/infochange/button`, {
+            fetch(`http://${localhost}:3000/users/infochange/button`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -193,7 +194,7 @@ fetch(`http://localhost:3000/users/infochange`, {
 
         document.getElementById('modalbutton4').addEventListener('click', () => {
             checkLoginStatus();
-            fetch(`http://localhost:3000/users/deleteUser/infochange`, {
+            fetch(`http://${localhost}:3000/users/deleteUser/infochange`, {
                 method : "DELETE",
                 credentials:'include'
             })
@@ -225,7 +226,7 @@ fetch(`http://localhost:3000/users/infochange`, {
 
         document.getElementById('item3').addEventListener('click', () => {
             checkLoginStatus();
-            fetch('http://localhost:3000/logout', { credentials: 'include' })
+            fetch(`http://${localhost}:3000/logout`, { credentials: 'include' })
                 .then(response => response.json())
                 .then(data => {
                     location.href='/';

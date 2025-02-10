@@ -1,5 +1,6 @@
+const localhost = 'localhost';
 const checkLoginStatus = () => {
-    fetch('http://localhost:3000/status', { credentials: 'include' })
+    fetch(`http://${localhost}:3000/status`, { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
             if (data.loggedIn) {
@@ -48,7 +49,7 @@ document.getElementById('input').addEventListener('click', () => {
     formData.delete("image");
 })
 
-fetch(`http://localhost:3000/users`, {credentials:'include'})
+fetch(`http://${localhost}:3000/users`, {credentials:'include'})
 	.then((response) => {
         if(!response.ok){
             throw new Error("네트워크 응답이 올바르지 않습니다.")
@@ -56,10 +57,10 @@ fetch(`http://localhost:3000/users`, {credentials:'include'})
         return response.json();
     })
 	.then((json) => {
-        document.getElementsByClassName("img1").item(0).src= `http://localhost:3000/image/${json}`;
+        document.getElementsByClassName("img1").item(0).src= `http://${localhost}:3000/image/${json}`;
     })
     .catch((error) => console.log(error))
-fetch(`http://localhost:3000/dialog/getwritingchange/${no}`, {
+fetch(`http://${localhost}:3000/dialog/getwritingchange/${no}`, {
     method: "GET",
     headers: {
         'Content-Type': 'application/json',
@@ -124,7 +125,7 @@ fetch(`http://localhost:3000/dialog/getwritingchange/${no}`, {
         
         document.getElementById('item3').addEventListener('click', () => {
             checkLoginStatus();
-            fetch('http://localhost:3000/logout', { credentials: 'include' })
+            fetch(`http://${localhost}:3000/logout`, { credentials: 'include' })
                 .then(response => response.json())
                 .then(data => {
                     location.href='/';
@@ -141,7 +142,7 @@ fetch(`http://localhost:3000/dialog/getwritingchange/${no}`, {
         document.getElementById('enter').addEventListener('click', () => {
             checkLoginStatus();
             if(document.getElementById('title1').value !== ""&& document.getElementById('content').value !== ""){
-            fetch('http://localhost:3000/image', {
+            fetch(`http://${localhost}:3000/image`, {
                 method: 'POST',
                 body: formData,
                 })
@@ -154,7 +155,7 @@ fetch(`http://localhost:3000/dialog/getwritingchange/${no}`, {
                         contentimg="";
                     }
             //개시글 수정버튼
-            fetch(`http://localhost:3000/dialog/patchwritingchange/${no}`, {
+            fetch(`http://${localhost}:3000/dialog/patchwritingchange/${no}`, {
                 method : "PATCH",
                 headers : {
                     'Content-Type': 'application/json',

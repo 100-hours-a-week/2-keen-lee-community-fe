@@ -1,5 +1,6 @@
+const localhost = 'localhost';
 const checkLoginStatus = () => {
-    fetch('http://localhost:3000/status', { credentials: 'include' })
+    fetch(`http://${localhost}:3000/status`, { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
             if (data.loggedIn) {
@@ -43,7 +44,7 @@ const loadFile = (input) => {
 };
 
 
-fetch(`http://localhost:3000/users`, {
+fetch(`http://${localhost}:3000/users`, {
     method: "GET",
     headers: {
         'Content-Type': 'application/json',
@@ -58,7 +59,7 @@ fetch(`http://localhost:3000/users`, {
         return response.json();
     })
 	.then((json) => {
-        document.getElementsByClassName("img1").item(0).src= `http://localhost:3000/image/${json}`;
+        document.getElementsByClassName("img1").item(0).src= `http://${localhost}:3000/image/${json}`;
     })
     .catch((error) => console.log(error))
 const a = () => {
@@ -116,7 +117,7 @@ document.getElementById('item2').addEventListener('click', () => {
 
 document.getElementById('item3').addEventListener('click', () => {
     checkLoginStatus();
-    fetch('http://localhost:3000/logout', { credentials: 'include' })
+    fetch(`http://${localhost}:3000/logout`, { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
             location.href='/';
@@ -153,7 +154,7 @@ document.getElementById('enter').addEventListener('click', async () => {
     a(); 
     if (textInput.value !== "" && contentInput.value !== "") {
         try {
-            const imageResponse = await fetch('http://localhost:3000/image', {
+            const imageResponse = await fetch(`http://${localhost}:3000/image`, {
                 method: 'POST',
                 body: formData,
             });
@@ -167,7 +168,7 @@ document.getElementById('enter').addEventListener('click', async () => {
                 contentimgname: imageData.filename,
             };
 
-            await fetch(`http://localhost:3000/dialog/saveDialog`, {
+            await fetch(`http://${localhost}:3000/dialog/saveDialog`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
+const localhost = 'localhost';
 const checkLoginStatus = () => {
-    fetch('http://localhost:3000/status', { credentials: 'include' })
+    fetch(`http://${localhost}:3000/status`, { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
             if (data.loggedIn) {
@@ -15,7 +16,7 @@ const checkLoginStatus = () => {
 // 로그아웃 요청
 document.getElementById('item3').addEventListener('click', () => {
     checkLoginStatus();
-    fetch('http://localhost:3000/logout', { credentials: 'include' })
+    fetch(`http://${localhost}:3000/logout`, { credentials: 'include' })
         .then(response => response.json())
         .then(data => {
             alert(data.message);
@@ -26,7 +27,7 @@ document.getElementById('item3').addEventListener('click', () => {
 // 페이지 로드 시 로그인 상태 확인
 document.addEventListener('DOMContentLoaded', checkLoginStatus);
 
-const URL_path = "http://localhost:3000";
+const URL_path = `http://${localhost}:3000`;
 fetch(`${URL_path}/dialog`, {
     method: "GET",
     headers: {
@@ -211,7 +212,7 @@ fetch(`${URL_path}/dialog`, {
         });
         
 
-        fetch(`http://localhost:3000/users`, {
+        fetch(`http://${localhost}:3000/users`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -274,7 +275,7 @@ fetch(`${URL_path}/dialog`, {
             
             //날짜 JSON에서 불러오기
             date.item(i).textContent = json[jindex].date;
-            fetch(`http://localhost:3000/users/getimg/${json[jindex].id}`, {
+            fetch(`http://${localhost}:3000/users/getimg/${json[jindex].id}`, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -289,7 +290,7 @@ fetch(`${URL_path}/dialog`, {
                 return response.json();
             })
             .then((json) => {
-                    image.item(i).src = `http://localhost:3000/image/${json}`;
+                    image.item(i).src = `http://${localhost}:3000/image/${json}`;
             })
             .catch((error) => console.log(error))
                 writingpage.item(i).addEventListener('mouseover', () => {
